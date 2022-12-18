@@ -1,3 +1,7 @@
-import type { LettersEntity } from '@database/types';
+import type { UnionLettersEntity } from '@database/types';
 
-export type LettersState = LettersEntity;;
+export type LettersState = UnionLettersEntity & {
+  isLoading: boolean;
+  hasError: boolean;
+  activeLetter: string;
+};

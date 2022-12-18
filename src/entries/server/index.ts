@@ -4,6 +4,7 @@ import { STATIC_ROUTE } from '@app/routes';
 
 import { staticRouter } from './static';
 import { renderer } from './renderer';
+import { apiRouter } from '@root/api';
 
 import {
   SERVER_PORT,
@@ -16,6 +17,8 @@ const expressApp = express();
 Database.init(DB_FILE_PATH)
   .then(() => {
     expressApp.use(STATIC_ROUTE, staticRouter);
+
+    expressApp.use('/api', apiRouter);
 
     expressApp.get(`*`, renderer);
 

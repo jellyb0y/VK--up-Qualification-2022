@@ -1,0 +1,123 @@
+@import '@assets/styles/constants.scss';
+
+.root {
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+
+  width: 200px;
+  margin-right: 16px;
+  margin-left: 4px;
+}
+
+.list {
+  margin-top: 12px;
+  margin-bottom: 8px;
+  padding-bottom: 8px;
+
+  border-bottom: 1px solid rgba(0, 16, 61, 0.12);
+  cursor: pointer;
+}
+
+.listButton {
+  margin-top: 1px;
+
+  &:last-child {
+    margin-top: 0;
+  }
+}
+
+.listItem {
+  display: block;
+  margin-top: 1px;
+
+  &:first-child {
+    margin-top: 0;
+  }
+}
+
+.pancilIcon {
+  display: none;
+  fill: #333;
+}
+
+.topMenu {
+  flex-grow: 1;
+}
+
+.icon {
+  margin-right: 10px;
+  fill: var(--primaryTextColor);
+}
+
+.colorPickerIcon {
+  margin-right: 10px;
+
+  path {
+    stroke: var(--primaryTextColor);
+  }
+
+  rect {
+    fill: var(--primaryTextColor);
+  }
+}
+
+.counter {
+  flex-grow: 1;
+  text-align: right;
+
+  font-size: 13px;
+  line-height: 20px;
+}
+
+.addFolderButton {
+  color: var(--secondaryTextColor);
+}
+
+.plusIcon {
+  margin-right: 8px;
+  fill: var(--secondaryTextColor);
+}
+
+@include useDarkTheme {
+  .list {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.4);
+  }
+}
+
+@include useMediaTablet {
+  .root {
+    margin-right: 19px;
+    width: 36px;
+  }
+
+  .buttonName {
+    display: none;
+  }
+
+  .button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+
+    padding: 0;
+  }
+
+  .colorPickerIcon,
+  .icon {
+    margin-right: 0;
+  }
+
+  .addFolderButton {
+    display: none;
+  }
+
+  .list {
+    border-bottom: 0;
+  }
+
+  .pancilIcon {
+    display: block;
+  }
+}

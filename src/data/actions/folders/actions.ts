@@ -1,1 +1,3 @@
 export const UPDATE_FOLDERS = 'UPDATE_FOLDERS';
+export const SET_FOLDER = 'SET_FOLDER';
+export const SET_FOLDERS_ERROR = 'SET_FOLDERS_ERROR';

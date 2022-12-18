@@ -16,6 +16,7 @@
     "paths": {
       "@app": ["./src/app"],
       "@app/*": ["./src/app/*"],
+      "@api/*": ["./src/api/*"],
       "@lib/*": ["./src/lib/*"],
       "@database": ["./src/database"],
       "@database/*": ["./src/database/*"],
@@ -23,6 +24,7 @@
       "@components/*": ["./src/components/*"],
       "@containers/*": ["./src/containers/*"],
       "@pages/*": ["./src/pages/*"],
+      "@hooks/*": ["./src/hooks/*"],
       "@utils/*": ["./src/utils/*"],
       "@data/*": ["src/data/*"],
       "@entries/*": ["src/entries/*"],

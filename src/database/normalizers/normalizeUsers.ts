@@ -1,13 +1,19 @@
-import { MD5 } from 'crypto-js';
+import { normalizeUser } from './normalizeUser';
 
-import type { DenormalizedUser, User } from '../types';
+import type { DenormalizedUser } from '../types';
 
-export const normalizeUsers = (data: DenormalizedUser[]): User[] => {
-  return data.map((item) => ({
-    id: MD5(item.email).toString(),
-    name: item.name,
-    surname: item.surname,
-    email: item.email,
-    avatar: item.avatar,
-  }));
+export const normalizeUsers = (data: DenormalizedUser[]) => {
+  return data.reduce((acc, denormalizedUser) => {
+    const { user, avatar } = normalizeUser(denormalizedUser);
+    acc.users.push(user);
+
+    if (avatar) {
+      acc.avatars[user.id] = avatar;
+    }
+
+    return acc;
+  }, {
+    users: [],
+    avatars: {},
+  });
 };

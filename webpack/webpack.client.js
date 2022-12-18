@@ -9,8 +9,6 @@ const isProduction = process.env.MODE === 'production';
 
 const common = require('./common');
 
-const fontInlineLoader = path.resolve(__dirname, './loaders/fonts-inline-loader.js');
-
 module.exports = merge(common, {
   entry: {
     main: path.resolve(__dirname, '../src/entries/client/index.tsx'),
@@ -19,7 +17,7 @@ module.exports = merge(common, {
     path: path.resolve(__dirname, '../dist'),
     publicPath: '/static/',
     filename: 'index.js',
-    clean: true,
+    clean: false,
   },
   plugins: [
     new HtmlWebpackPlugin({
@@ -27,7 +25,7 @@ module.exports = merge(common, {
       filename: path.resolve(__dirname, '../dist/index.html'),
     }),
     new FaviconsWebpackPlugin({
-      logo: path.resolve(__dirname, '../src/assets/images/favicon.png'),
+      logo: path.resolve(__dirname, '../src/assets/images/favicon.svg'),
       outputPath: path.resolve(__dirname, '../dist'),
       prefix: '/static/',
       inject: true,
@@ -57,9 +55,6 @@ module.exports = merge(common, {
               },
               sourceMap: true
             }
-          },
-          {
-            loader: fontInlineLoader,
           },
           {
             loader: 'sass-loader',

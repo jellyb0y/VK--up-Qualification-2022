@@ -12,7 +12,7 @@ module.exports = merge(common, {
     path: path.resolve(__dirname, '../dist'),
     publicPath: '/static/',
     filename: 'server.js',
-    clean: true,
+    clean: false,
   },
   target: 'node',
   module: {

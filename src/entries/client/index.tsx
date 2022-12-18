@@ -2,6 +2,8 @@ import { render, hydrate } from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
 
 import App from '@app';
+import { ThemeProvider } from '@lib/Themes/ThemeProvider';
+import { PreparerProvider } from '@lib/DataPreparer/PreparerProvider';
 
 import DOMReady from '@utils/DOMReady';
 import { IS_PRODUCTION, PRELOADED_STATE_KEY } from '@constants';
@@ -17,7 +19,11 @@ DOMReady.then(async () => {
 
   const app = (
     <BrowserRouter>
-      <App store={store} />
+      <PreparerProvider store={store}>
+        <ThemeProvider>
+          <App store={store} />
+        </ThemeProvider>
+      </PreparerProvider>
     </BrowserRouter>
   );
 

@@ -1,13 +1,36 @@
-import type { AnyAction, Dispatch, Store } from '@reduxjs/toolkit';
+import type { State } from '@data/types';
+import type { ActionCreator, Dispatch, Store } from '@reduxjs/toolkit';
+import type { ThunkActionDispatch } from 'redux-thunk';
 
-export interface StoreWrapperProps {
+export interface PreparerProviderProps {
   store: Store;
 }
 
-export interface WithDataPreparerParams<P> {
-  onPrepare: (dispatch: Dispatch, props: P) => void;
+export enum Side {
+  Server = 'server',
+  Client = 'client',
 }
 
+export type PreparerFunc<P> = (
+  dispatch: ThunkActionDispatch<ActionCreator<any>>,
+  getState: () => State,
+  props: P
+) => Promise<void> | void;
+
+export type Preparer<P = {}> = {
+  id: number;
+  preparer: PreparerFunc<P>;
+  side?: Side;
+  every?: boolean;
+};
+
+export type PreparerParams = {
+  side?: Side;
+  every?: boolean;
+};
+
 export type Context = {
+  usedPreparers: Record<string, boolean>;
   dispatch: Dispatch;
+  getState: () => State;
 };

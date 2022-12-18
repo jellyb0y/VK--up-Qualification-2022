@@ -1,13 +1,12 @@
-body, html, #root {
+body, html {
   height: 100%;
   width: 100%;
-  font-family: 'Gilroy', 'Montserrat', Verdana, 'Geneva', Tahoma, sans-serif;
-  font-size: 14px;
-  color: var(--primaryTextColor);
+  font-family: 'Mail Sans Roman', 'Arial';
 }
 
 body {
   background-color: var(--bgColor);
+  color: var(--primaryTextColor);
 }
 
 * {

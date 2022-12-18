@@ -6,6 +6,9 @@ import { Router } from './Router';
 import type { FC } from 'react';
 import type * as T from './types';
 
+import '@assets/styles/common.scss';
+import '@assets/styles/variables.scss';
+
 const App: FC<T.AppProps> = ({
   store,
 }) => (
