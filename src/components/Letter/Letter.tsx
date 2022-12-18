@@ -66,7 +66,7 @@ const Letter: FC<LetterProps> = ({
       </div>
       {doc && (
         <div className={S.docs}>
-          <img className={S.docImage} src={doc.img} />
+          <img className={S.docImage} src={doc.img[0]} />
           <div className={S.docText}>
             1 файл
             <span className={S.docDownload}>

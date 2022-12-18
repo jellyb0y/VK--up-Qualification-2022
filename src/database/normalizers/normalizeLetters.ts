@@ -55,7 +55,9 @@ export const normalizeLetters = (data: DenormalizedData) => {
       folder: folder.id,
       date: letter.date,
       doc: letter.doc && {
-        img: letter.doc.img,
+        img: Array.isArray(letter.doc.img)
+          ? letter.doc.img
+          : [letter.doc.img],
       },
     };
   });

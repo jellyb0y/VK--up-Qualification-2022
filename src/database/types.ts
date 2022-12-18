@@ -63,7 +63,7 @@ export type Letter = {
   folder: string;
   date: string;
   doc?: {
-    img: string;
+    img: string[];
   }
 };
 
@@ -85,6 +85,6 @@ export type DenormalizedData = {
   date: string;
   folder?: string;
   doc?: {
-    img: string;
+    img: string | string[];
   }
 }[];

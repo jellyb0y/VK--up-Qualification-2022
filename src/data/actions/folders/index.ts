@@ -1,10 +1,11 @@
 import type {
   SetFolderAction,
   SetFoldersErrorAction,
+  SetFoldersLoadingAction,
   UpdateFoldersAction,
 } from './types';
 
-import { SET_FOLDER, SET_FOLDERS_ERROR, UPDATE_FOLDERS } from './actions';
+import { SET_FOLDER, SET_FOLDERS_ERROR, SET_FOLDERS_LOADING, UPDATE_FOLDERS } from './actions';
 
 import type { FoldersEntity } from '@database/types';
 
@@ -20,4 +21,8 @@ export const setFolderAction = (folder: string): SetFolderAction => ({
 
 export const setFoldersErrorAction = (): SetFoldersErrorAction => ({
   type: SET_FOLDERS_ERROR,
+});
+
+export const setFoldersLoadingAction = (): SetFoldersLoadingAction => ({
+  type: SET_FOLDERS_LOADING,
 });

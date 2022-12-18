@@ -11,7 +11,10 @@ export interface SetFolderAction extends BaseAction<'SET_FOLDER'> {
 
 export type SetFoldersErrorAction = BaseAction<'SET_FOLDERS_ERROR'>;
 
+export type SetFoldersLoadingAction = BaseAction<'SET_FOLDERS_LOADING'>;
+
 export type ActionTypes =
   | UpdateFoldersAction
   | SetFolderAction
-  | SetFoldersErrorAction;
+  | SetFoldersErrorAction
+  | SetFoldersLoadingAction;

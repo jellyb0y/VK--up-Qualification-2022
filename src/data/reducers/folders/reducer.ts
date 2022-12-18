@@ -1,9 +1,10 @@
-import { SET_FOLDER, SET_FOLDERS_ERROR, UPDATE_FOLDERS } from '../../actions/folders/actions';
+import { SET_FOLDER, SET_FOLDERS_ERROR, SET_FOLDERS_LOADING, UPDATE_FOLDERS } from '../../actions/folders/actions';
 
 import type { ActionTypes } from '@root/data/actions/folders/types';
 import type { FoldersState } from './types';
 
 export const getInitialState = (): FoldersState => ({
+  isLoading: false,
   hasError: false,
   activeFolder: null,
   entities: {},
@@ -28,6 +29,7 @@ export const folders = (state = getInitialState(), action: ActionTypes) => {
     case SET_FOLDER:
       return {
         ...state,
+        isLoading: false,
         hasError: action.folder === state.activeFolder && state.hasError,
         activeFolder: action.folder,
       };
@@ -35,7 +37,14 @@ export const folders = (state = getInitialState(), action: ActionTypes) => {
     case SET_FOLDERS_ERROR:
       return {
         ...state,
+        isLoading: false,
         hasError: true,
+      };
+
+    case SET_FOLDERS_LOADING:
+      return {
+        ...state,
+        isLoading: true,
       };
 
     default:

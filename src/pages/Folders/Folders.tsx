@@ -8,6 +8,7 @@ import type { FC } from 'react';
 import type { FoldersProps } from './types';
 import type { State } from '@data/types';
 import type { ShortLetter } from '@database/types';
+import LetterShortCutStub from '@components/LetterShortCutStub';
 
 const mapStateToProps = (state: State) => {
   const activeFolder = state.folders.activeFolder;
@@ -21,6 +22,8 @@ const mapStateToProps = (state: State) => {
   }, [] as ShortLetter[]);
 
   return {
+    hasError: state.folders.hasError,
+    isLoading: state.folders.isLoading,
     activeFolder,
     letters,
     users: state.users.entities,
@@ -31,21 +34,40 @@ const Folders: FC<FoldersProps> = ({
   activeFolder,
   letters,
   users,
+  hasError,
+  isLoading,
 }) => {
   const sortedLetters = letters.sort(({ date: dateA }, { date: dateB }) => (
     new Date(dateB).getTime() - new Date(dateA).getTime()
   ));
 
+  const isListReady = (
+    sortedLetters.length &&
+    !hasError &&
+    !isLoading
+  );
+
   return (
     <div className={S.root}>
-      {sortedLetters.map((letter) => (
-        <LetterComponent
-          key={letter.id}
-          authorUser={users[letter.author]}
-          folder={activeFolder}
-          {...letter}
-        />
-      ))}
+      {isListReady ? (
+        sortedLetters.map((letter) => (
+          <LetterComponent
+            key={letter.id}
+            authorUser={users[letter.author]}
+            folder={activeFolder}
+            {...letter}
+          />
+        ))
+      ) : (
+        <>
+          <LetterShortCutStub />
+          <LetterShortCutStub />
+          <LetterShortCutStub />
+          <LetterShortCutStub />
+          <LetterShortCutStub />
+          <LetterShortCutStub />
+        </>
+      )}
     </div>
   );
 };
