@@ -1,0 +1,47 @@
+@mixin bodyWithLightTheme {
+  @media (prefers-color-scheme: light) {
+    @content;
+  }
+
+  body[scheme="light"] {
+    @content;
+  }
+}
+
+@mixin bodyWithDarkTheme {
+  @media (prefers-color-scheme: dark) {
+    @content;
+  }
+
+  body[scheme="dark"] {
+    @content;
+  }
+}
+
+:root {
+  @include bodyWithLightTheme {
+    --bgColor: #F6F7F8;
+    --primaryBgColor: #FFFFFF;
+    --primaryButtonBgColor: #FFFFFF;
+    --activeButtonBgColor: #E9EAEC;
+    --stubBgColor: #E9EAEC;
+    
+    --primaryTextColor: #2c2d2e;
+    --secondaryTextColor: rgba(44, 45, 46, 0.48);
+    --lightTextColor: #87898F;
+  }
+}
+
+:root {
+  @include bodyWithDarkTheme {
+    --bgColor: #19191A;
+    --primaryBgColor: #232324;
+    --primaryButtonBgColor: #FFFFFF;
+    --activeButtonBgColor: #ffffff29;
+    --stubBgColor: #ffffff29;
+
+    --primaryTextColor: #E7E8EA;
+    --secondaryTextColor: rgba(231, 232, 234, 0.48);
+    --lightTextColor: #8C8E94;
+  }
+}

@@ -1,0 +1,111 @@
+@import '@assets/styles/constants.scss';
+
+.root {
+  height: fit-content;
+  flex-grow: 1;
+  padding: 16px 24px 32px 32px;
+  border-radius: 12px;
+  background-color: var(--primaryBgColor);
+}
+
+.title {
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 32px;
+  margin-bottom: 16px;
+}
+
+.head {
+  display: flex;
+  padding: 8px 8px 8px 0;
+  align-items: center;
+  position: relative;
+}
+
+.headContent {
+  margin-left: 12px;
+}
+
+.headMain {
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 20px;
+}
+
+.date {
+  color: var(--lightTextColor);
+  margin-left: 8px;
+  font-weight: 400;
+  font-size: 13px;
+  line-height: 18px;
+}
+
+.recepients {
+  margin-top: 4px;
+  color: var(--lightTextColor);
+  font-weight: 400;
+  font-size: 13px;
+  line-height: 18px;
+}
+
+.recepientsMore {
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.body {
+  padding-right: 8px;
+  padding-top: 16px;
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 20px;
+}
+
+.readMark {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+
+  background-color: #005FF9;
+
+  position: absolute;
+  top: calc(50% - 3px);
+  left: -16px;
+}
+
+.docs {
+  padding: 12px 8px 12px 0;
+}
+
+.docImage {
+  height: 190px;
+  border-radius: 12px;
+  margin-bottom: 8px;
+}
+
+.docText {
+  font-weight: 400;
+  font-size: 13px;
+  line-height: 18px;
+}
+
+.docDownload {
+  margin-left: 16px;
+  color: #005BD1;
+  cursor: pointer;
+
+  > span {
+    color: var(--lightTextColor);
+    cursor: default;
+  }
+}
+
+@include useDarkTheme {
+  .readMark {
+    background-color: #0C7CFF;
+  }
+
+  .docDownload {
+    color: #589BFF;
+  }
+}

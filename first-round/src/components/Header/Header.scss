@@ -1,0 +1,66 @@
+@import '@assets/styles/constants.scss';
+
+.root {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  height: 56px;
+  background-color: var(--primaryBgColor);
+  filter: drop-shadow(0px 0px 16px rgba(2, 13, 41, 0.12));
+}
+
+.logoLight,
+.logoDark {
+  width: 96px;
+  height: 32px;
+  margin-left: 16px;
+
+  @include useMediaTablet {
+    width: 32px;
+  }
+}
+
+.backButton {
+  margin-left: 16px;
+  font-weight: 500;
+  
+  &Arrow {
+    width: 20px;
+    height: 20px;
+    margin-right: 12px;
+
+    @include useMediaTablet {
+      margin-right: 0;
+    }
+  }
+
+  &Text {
+    @include useMediaTablet {
+      display: none;
+    }
+  }
+}
+
+@include useLightTheme {
+  .logoLight {
+    display: block;
+  }
+
+  .logoDark {
+    display: none;
+  }
+}
+
+@include useDarkTheme {
+  .logoLight {
+    display: none;
+  }
+
+  .logoDark {
+    display: block;
+  }
+
+  .backButton svg {
+    fill: #D9DADD;
+  }
+}
