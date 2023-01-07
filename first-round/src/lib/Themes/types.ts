@@ -1,5 +1,5 @@
 export interface ThemeProviderProps {
-  cookie?: string;
+  theme: Themes;
 }
 
 export enum Themes {

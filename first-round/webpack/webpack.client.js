@@ -9,6 +9,7 @@ const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 const TerserPlugin = require('terser-webpack-plugin');
 
 const isProduction = process.env.MODE === 'production';
+const tsConfigPath = path.resolve(__dirname, '../tsconfig.json');
 const withBundleAnalyzer = Boolean(process.env.BUNDLE_ANALYZE);
 
 const common = require('./common');
@@ -54,6 +55,20 @@ module.exports = merge(common, {
   ],
   module: {
     rules: [
+      {
+        test: /\.tsx?$/,
+        exclude: /@server\.tsx?/,
+        use: {
+          loader: 'ts-loader',
+          options: {
+            configFile: tsConfigPath,
+          },
+        },
+      },
+      {
+        include: /@server\.tsx?/,
+        use: ['null-loader'],
+      },
       {
         test: /\.scss$/,
         use: [

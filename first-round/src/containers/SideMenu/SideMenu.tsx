@@ -1,8 +1,10 @@
+import { useCallback } from 'react';
 import { connect } from 'react-redux';
 import { Link, useParams } from 'react-router-dom';
 import classnames from 'classnames';
 
 import Button, { ButtonMode, ContentAlign } from '@components/Button';
+import StubComponent from '@components/StubComponent';
 
 import IncomingsIcon from '@assets/images/incomings.svg';
 import ImportantIcon from '@assets/images/importants.svg';
@@ -27,7 +29,7 @@ import { Themes } from '@lib/Themes/types';
 
 import S from './SideMenu.scss';
 
-import { FC, useCallback, useMemo } from 'react';
+import type { FC } from 'react';
 import type { State } from '@data/types';
 import type { SideMenuProps, FolderIcons } from './types';
 
@@ -73,19 +75,16 @@ const mapStateToProps = (state: State) => ({
 });
 
 const SideMenu: FC<SideMenuProps> = ({ folders }) => {
+  const {
+    folder: activeFolder = folders.activeFolder
+  } = useParams<{ folder?: string }>();
+
   const screenType = useScreenObserver();
   const { theme, setTheme } = useThemes();
 
-  const {
-    folder: activeFolder = folders.activeFolder || DEFAULT_FOLDER,
-  } = useParams<{ folder: string }>();
-
-  const tabletSort = screenType !== ScreenType.Tablet ? DESKTOP_FOLDERS_SORT : TABLET_FOLDERS_SORT;
-  const orderedFolders = getFoldersOrder(tabletSort, folders.ids);
-
-  const isFolderExists = useMemo(() => (
-    folders.ids.includes(activeFolder)
-  ), [activeFolder, folders]);
+  const foldersSort = screenType !== ScreenType.Tablet ? DESKTOP_FOLDERS_SORT : TABLET_FOLDERS_SORT;
+  const foldersIds = folders.ids.length > 0 ? folders.ids : foldersSort;
+  const orderedFolders = getFoldersOrder(foldersSort, foldersIds);
 
   const changeTheme = useCallback(() => {
     const maxThemeIndex = screenType === ScreenType.Desktop ? 3 : 2;
@@ -128,16 +127,21 @@ const SideMenu: FC<SideMenuProps> = ({ folders }) => {
               <Link key={id} className={S.listItem} to={url}>
                 <Button
                   stretch
-                  selected={isFolderExists
-                    ? id === activeFolder
-                    : id === DEFAULT_FOLDER
-                  }
+                  selected={id === activeFolder}
                   contentAlign={ContentAlign.Left}
                   mode={ButtonMode.Transparent}
                   className={S.button}
                 >
-                  <IconComponent className={S.icon}/>
-                  <span className={S.buttonName}>{name}</span>
+                  <span className={S.iconWrapper}>
+                    <IconComponent className={S.icon}/>
+                  </span>
+                  {name ? (
+                    <span className={S.buttonName}>{name}</span>
+                  ) : (
+                    <StubComponent
+                      className={classnames(S.buttonName, S.buttonNameStub)}
+                    />
+                  )}
                   {/* <span className={S.counter}>{letters.length}</span> */}
                 </Button>
               </Link>

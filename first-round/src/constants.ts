@@ -6,6 +6,7 @@ export const IS_PRODUCTION = process.env.isProduction;
 
 export const SERVER_PORT = 3000;
 export const INDEX_PATH = `${ROOT_PATH}/index.html`;
+export const PRERENDERS_PATH = `${ROOT_PATH}/prerenders`;
 
 export const DB_FILE_PATH = `${ROOT_PATH}/db.json`;
 

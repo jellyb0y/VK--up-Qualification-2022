@@ -1,8 +1,8 @@
 const path = require('path');
 const { merge } = require('webpack-merge');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 const common = require('./common');
+const tsConfigPath = path.resolve(__dirname, '../tsconfig.json');
 
 module.exports = merge(common, {
   entry: {
@@ -18,30 +18,13 @@ module.exports = merge(common, {
   module: {
     rules: [
       {
-        test: /\.scss$/,
-        use: [
-          {
-            loader: MiniCssExtractPlugin.loader,
-            options: {
-              emit: false,
-            },
+        test: /\.tsx?$/,
+        use: {
+          loader: 'ts-loader',
+          options: {
+            configFile: tsConfigPath,
           },
-          {
-            loader: 'css-loader',
-            options: {
-              modules: {
-                localIdentName: '[name]__[local]--[hash:base64:5]',
-              },
-              sourceMap: true
-            }
-          },
-          {
-            loader: 'sass-loader',
-            options: {
-              sourceMap: true
-            }
-          },
-        ]
+        },
       },
     ],
   },

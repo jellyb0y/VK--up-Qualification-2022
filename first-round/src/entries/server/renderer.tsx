@@ -1,66 +1,35 @@
-import { renderToString } from 'react-dom/server';
-import { StaticRouter } from 'react-router-dom/server';
-import { discoverProjectStyles, getCriticalStyles } from 'used-styles';
-import { Helmet } from 'react-helmet';
+import { matchPath } from 'react-router';
 
-import App from '@app';
-import { PreparerProvider } from '@lib/DataPreparer/PreparerProvider';
-import { ThemeProvider } from '@lib/Themes/ThemeProvider';
-
-import { templator } from './html';
-import { createStore } from '@data/store';
-import { initStore } from '@data/store/initStore';
+import { indexHTML, prerenders  } from './prerenders';
 import { getSelectedTheme } from '@lib/Themes/getSelectedTheme';
-
-import {
-  ROOT_PATH,
-} from '@constants';
 
 import type { Request, Response } from 'express';
 
-const stylesLookup = discoverProjectStyles(ROOT_PATH);
-
 export const renderer = async (req: Request, res: Response) => {
   try {
-    await stylesLookup;
-
-    const state = await initStore();
-    const store = createStore(state);
-
-    const helmet = Helmet.renderStatic();
     const theme = getSelectedTheme(req.headers.cookie);
-    const appHTML = renderToString(
-      <StaticRouter location={req.url}>
-        <PreparerProvider store={store}>
-          <ThemeProvider cookie={req.headers.cookie}>
-            <App store={store} />
-          </ThemeProvider>
-        </PreparerProvider>
-      </StaticRouter>
-    );
+    const regexp = new RegExp(`^\{([^}]+)\}_${theme}.html$`);
 
-    const preloadedState = store.getState();
-    const criticalStyles = getCriticalStyles(appHTML, stylesLookup)
-      .replace('data-used-styles="index.css"', '');
+    const appHtml = Object.entries(prerenders).find(([key]) => {
+      const patternCode = key.match(regexp)?.[1];
+      
+      if (!patternCode) {
+        return;
+      }
 
-    const indexHTML = await templator(
-      appHTML,
-      preloadedState,
-      [
-        helmet.title.toString(),
-        helmet.meta.toString(),
-        helmet.link.toString(),
-        helmet.script.toString(),
-        criticalStyles,
-      ],
-      theme,
-    );
+      const pattern = Buffer.from(patternCode, 'base64').toString();
+
+      if (matchPath(pattern, req.url)) {
+        return true;
+      }
+    })?.[1] || indexHTML;
 
     res.contentType('text/html');
     res.status(200);
 
-    return res.send(indexHTML); 
+    return res.send(appHtml); 
   } catch (error) {
     console.error(error);
+    res.status(500).end();
   }
 };

@@ -35,16 +35,6 @@ module.exports = {
         test: /\.svg$/,
         use: ['@svgr/webpack'],
       },
-      {
-        test: /\.(ts|tsx)$/,
-        exclude: /node_modules/,
-        use: {
-          loader: 'ts-loader',
-          options: {
-            configFile: tsConfigPath,
-          },
-        },
-      },
     ],
   },
   plugins: [

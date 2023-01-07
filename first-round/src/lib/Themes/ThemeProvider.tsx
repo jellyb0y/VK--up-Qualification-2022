@@ -1,7 +1,6 @@
 import { useCallback, useMemo, useState } from 'react';
 import { Context } from './context';
 
-import { getSelectedTheme } from './getSelectedTheme';
 import { setSelectedTheme } from './setSelectedTheme';
 
 import { Themes } from './types';
@@ -10,8 +9,8 @@ import { IS_SERVER } from '@utils/isServer';
 import type { ThemeProviderProps } from './types';
 import type { FC } from 'react';
 
-export const ThemeProvider: FC<ThemeProviderProps> = ({ cookie, children }) => {
-  const [theme, setTheme] = useState<Themes>(getSelectedTheme(cookie));
+export const ThemeProvider: FC<ThemeProviderProps> = ({ theme: selectedTheme, children }) => {
+  const [theme, setTheme] = useState<Themes>(selectedTheme);
 
   const onChangeTheme = useCallback((theme: Themes) => {
     setTheme(theme);

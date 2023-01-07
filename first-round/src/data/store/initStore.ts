@@ -7,7 +7,7 @@ import type { LettersState } from '@data/reducers/letters';
 import type { FoldersState } from '@data/reducers/folders';
 import type { State } from '../types';
 
-export const initStore = async (): Promise<State> => {
+export const initStore = (): State => {
   const letters: LettersState = getInitialLettersState();
   const folders: FoldersState = getInitialFoldersState();
   const users: UsersState = getInitialUsersState();
