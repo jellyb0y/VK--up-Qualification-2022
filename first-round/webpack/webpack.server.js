@@ -1,8 +1,11 @@
 const path = require('path');
 const { merge } = require('webpack-merge');
+const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 
 const common = require('./common');
 const tsConfigPath = path.resolve(__dirname, '../tsconfig.json');
+
+const withBundleAnalyzer = Boolean(process.env.BUNDLE_ANALYZE);
 
 module.exports = merge(common, {
   entry: {
@@ -15,10 +18,16 @@ module.exports = merge(common, {
     clean: false,
   },
   target: 'node',
+  plugins: [
+    ...(withBundleAnalyzer ? [
+      new BundleAnalyzerPlugin(),
+    ] : []),
+  ],
   module: {
     rules: [
       {
         test: /\.tsx?$/,
+        exclude: /node_modules/,
         use: {
           loader: 'ts-loader',
           options: {

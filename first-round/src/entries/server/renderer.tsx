@@ -1,11 +1,11 @@
-import { matchPath } from 'react-router';
-
-import { indexHTML, prerenders  } from './prerenders';
+import { indexHTML, prerenders } from './prerenders';
 import { getSelectedTheme } from '@lib/Themes/getSelectedTheme';
+import { matchUrl } from '@utils/matchUrl';
+import Server from '@lib/Server';
 
-import type { Request, Response } from 'express';
+export const rendererRouter = Server.route();
 
-export const renderer = async (req: Request, res: Response) => {
+rendererRouter.get('*', async (req, res) => {
   try {
     const theme = getSelectedTheme(req.headers.cookie);
     const regexp = new RegExp(`^\{([^}]+)\}_${theme}.html$`);
@@ -19,17 +19,18 @@ export const renderer = async (req: Request, res: Response) => {
 
       const pattern = Buffer.from(patternCode, 'base64').toString();
 
-      if (matchPath(pattern, req.url)) {
+      if (matchUrl(pattern, req.url)) {
         return true;
       }
     })?.[1] || indexHTML;
 
-    res.contentType('text/html');
-    res.status(200);
-
-    return res.send(appHtml); 
+    res.setHeader('Content-Type', 'text/html; charset=utf-8');
+    res.statusCode = 200;
+    res.write(appHtml);
   } catch (error) {
     console.error(error);
-    res.status(500).end();
+    res.statusCode = 500;
   }
-};
+
+  res.endResponse();
+});

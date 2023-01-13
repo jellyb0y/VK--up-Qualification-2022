@@ -1,16 +1,21 @@
-import type { Request, Response } from 'express';
 import { getLetterById } from '../selectors/getLetterById';
 
-export const getLetter = (req: Request, res: Response) => {
+import type { Entrypoint } from '@lib/Server/types';
+
+export const getLetter: Entrypoint = (req, res) => {
   const { query: { id } } = req;
 
   if (!id) {
-    return res.status(400).json({
+    res.statusCode = 400;
+    res.write(JSON.stringify({
       error: 'letter id is required',
-    });
+    }));
+    return res.endResponse();
   }
 
   const data = getLetterById(id as string);
 
-  res.json(data);
+  res.statusCode = 200;
+  res.write(JSON.stringify(data));
+  res.endResponse();
 };

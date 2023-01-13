@@ -62,6 +62,7 @@ export type Letter = {
   read: boolean;
   folder: string;
   date: string;
+  isShort?: boolean;
   doc?: {
     img: string[];
   }

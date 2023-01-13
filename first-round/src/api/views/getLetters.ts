@@ -1,16 +1,21 @@
-import type { Request, Response } from 'express';
 import { getLettersByFolder } from '../selectors/getLettersByPage';
 
-export const getLetters = (req: Request, res: Response) => {
+import type { Entrypoint } from '@lib/Server/types';
+
+export const getLetters: Entrypoint = (req, res) => {
   const { query: { folder } } = req;
 
   if (!folder) {
-    return res.status(400).json({
+    res.statusCode = 400;
+    res.write(JSON.stringify({
       error: 'folder id is required',
-    });
+    }));
+    return res.endResponse();
   }
 
   const data = getLettersByFolder(folder as string);
 
-  res.json(data);
+  res.statusCode = 200;
+  res.write(JSON.stringify(data));
+  res.endResponse();
 };

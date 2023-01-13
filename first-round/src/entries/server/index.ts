@@ -1,10 +1,10 @@
-import express from 'express';
-
-import { STATIC_ROUTE } from '@app/routes';
+import { STATIC_ROUTE, API_ROUTE, ROOT_PATH } from '@app/routes';
 
 import { staticRouter } from './static';
-import { renderer } from './renderer';
+import { rendererRouter } from './renderer';
 import { apiRouter } from '@root/api';
+
+import Server from '@lib/Server';
 
 import {
   SERVER_PORT,
@@ -12,17 +12,18 @@ import {
 } from '@constants';
 import Database from '@database';
 
-const expressApp = express();
+const server = new Server();
 
 Database.init(DB_FILE_PATH)
   .then(() => {
-    expressApp.use(STATIC_ROUTE, staticRouter);
+    server.onError((error: Error) => console.error('[ERROR]:', error));
 
-    expressApp.use('/api', apiRouter);
+    server.connectRouter(STATIC_ROUTE, staticRouter);
 
-    expressApp.get(`*`, renderer);
+    server.connectRouter(API_ROUTE, apiRouter);
 
-    expressApp.listen(SERVER_PORT, () => {
-      console.log(`Server is listening on port: ${SERVER_PORT}`);
-    });
+    server.connectRouter(ROOT_PATH, rendererRouter);
+
+    server.listen(SERVER_PORT);
+    console.log(`Server is listening on port: ${SERVER_PORT}`);
   });

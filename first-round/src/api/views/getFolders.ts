@@ -1,7 +1,10 @@
-import type { Request, Response } from 'express';
 import { getFolders as getFoldersSelector } from '../selectors/getFolders';
 
-export const getFolders = (req: Request, res: Response) => {
+import type { Entrypoint } from '@lib/Server/types';
+
+export const getFolders: Entrypoint = (req, res) => {
   const data = getFoldersSelector();
-  res.json(data);
+  res.statusCode = 200;
+  res.write(JSON.stringify(data));
+  res.endResponse();
 };

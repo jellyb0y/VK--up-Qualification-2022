@@ -20,7 +20,7 @@ module.exports = merge(common, {
     rules: [
       {
         test: /\.tsx?$/,
-        exclude: /@client\.tsx?/,
+        exclude: /node_modules|@client\.tsx?/,
         use: {
           loader: 'ts-loader',
           options: {

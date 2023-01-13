@@ -6,7 +6,7 @@ import { ThemeProvider } from '@lib/Themes/ThemeProvider';
 import { PreparerProvider } from '@lib/DataPreparer/PreparerProvider';
 
 import DOMReady from '@utils/DOMReady';
-import { IS_PRODUCTION, PRELOADED_STATE_KEY } from '@constants';
+import { PRELOADED_STATE_KEY } from '@constants';
 import { createStore } from '@data/store';
 import { initStore } from '@data/store/initStore';
 import { getSelectedTheme } from '@lib/Themes/getSelectedTheme';
@@ -29,9 +29,5 @@ DOMReady.then(async () => {
     </BrowserRouter>
   );
 
-  if (!IS_PRODUCTION) {
-    render(app, rootElement);
-  } else {
-    hydrate(app, rootElement);
-  }
+  hydrate(app, rootElement);
 });

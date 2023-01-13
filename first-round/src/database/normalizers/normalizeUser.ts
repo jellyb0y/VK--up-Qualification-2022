@@ -1,10 +1,10 @@
-import { MD5 } from 'crypto-js';
+import { generateHash } from '@utils/generateHash';
 
-import type { DenormalizedUser, User } from '../types';
+import type { DenormalizedUser } from '../types';
 
 export const normalizeUser = (item: DenormalizedUser) => ({
   user: {
-    id: MD5(item.email).toString(),
+    id: generateHash(item.email),
     name: item.name,
     surname: item.surname,
     email: item.email,

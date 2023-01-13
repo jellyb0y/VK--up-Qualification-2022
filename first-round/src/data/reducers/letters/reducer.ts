@@ -1,3 +1,5 @@
+import { mergeLetterEntities } from './mergeLetterEntities';
+
 import { SET_LETTER, SET_LETTER_ERROR, SET_LETTER_LOADING, UPDATE_LETTERS, UPDATE_LETTER_DATA } from '../../actions/letters/actions';
 
 import type { ActionTypes } from '@root/data/actions/letters/types';
@@ -31,10 +33,7 @@ export const letters = (state = getInitialState(), action: ActionTypes) => {
     case UPDATE_LETTERS:
       return {
         ...state,
-        entities: {
-          ...state.entities,
-          ...action.letters.entities,
-        },
+        entities: mergeLetterEntities(state.entities, action.letters.entities),
         ids: Array.from(new Set([
           ...state.ids,
           ...action.letters.ids,

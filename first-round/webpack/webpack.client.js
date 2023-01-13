@@ -1,12 +1,10 @@
 const path = require('path');
 const { merge } = require('webpack-merge');
-const webpack = require('webpack');
 
 const FaviconsWebpackPlugin = require('favicons-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
-const TerserPlugin = require('terser-webpack-plugin');
 
 const isProduction = process.env.MODE === 'production';
 const tsConfigPath = path.resolve(__dirname, '../tsconfig.json');
@@ -21,12 +19,8 @@ module.exports = merge(common, {
   output: {
     path: path.resolve(__dirname, '../dist'),
     publicPath: '/static/',
-    filename: 'index.js',
+    filename: '[name].js',
     clean: false,
-  },
-  optimization: {
-    minimize: true,
-    minimizer: [new TerserPlugin()],
   },
   plugins: [
     new HtmlWebpackPlugin({
@@ -57,7 +51,7 @@ module.exports = merge(common, {
     rules: [
       {
         test: /\.tsx?$/,
-        exclude: /@server\.tsx?/,
+        exclude: /node_modules|@server\.tsx?/,
         use: {
           loader: 'ts-loader',
           options: {

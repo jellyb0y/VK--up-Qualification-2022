@@ -1,6 +1,7 @@
 import { connect } from 'react-redux';
 
 import LetterComponent from '@components/LetterShortCut';
+import FoldersListStub from '@components/FoldersListStub';
 
 import S from './Folders.scss';
 
@@ -8,7 +9,6 @@ import type { FC } from 'react';
 import type { FoldersProps } from './types';
 import type { State } from '@data/types';
 import type { ShortLetter } from '@database/types';
-import LetterShortCutStub from '@components/LetterShortCutStub';
 
 const mapStateToProps = (state: State) => {
   const activeFolder = state.folders.activeFolder;
@@ -59,14 +59,7 @@ const Folders: FC<FoldersProps> = ({
           />
         ))
       ) : (
-        <>
-          <LetterShortCutStub />
-          <LetterShortCutStub />
-          <LetterShortCutStub />
-          <LetterShortCutStub />
-          <LetterShortCutStub />
-          <LetterShortCutStub />
-        </>
+        <FoldersListStub />
       )}
     </div>
   );

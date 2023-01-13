@@ -1,8 +1,7 @@
-import { MD5 } from 'crypto-js';
-
 import { normalizeUsers } from './normalizeUsers';
 import { normalizeUser } from './normalizeUser';
 import { normalizeFolder } from './normalizeFolder';
+import { generateHash } from '@utils/generateHash';
 
 import type { Avatars, DenormalizedData, Folder, Letter, User } from '../types';
 
@@ -22,7 +21,7 @@ export const normalizeLetters = (data: DenormalizedData) => {
       ...toUsersAvatars,
     };
 
-    const letterId = MD5(author.id + letter.title + letter.date).toString();
+    const letterId = generateHash(author.id + letter.title + letter.date);
 
     [...toUsers, author].forEach((user) => {
       if (!users.some(({ id }) => id === user.id)) {
@@ -54,6 +53,8 @@ export const normalizeLetters = (data: DenormalizedData) => {
       read: letter.read,
       folder: folder.id,
       date: letter.date,
+      isShort: false,
+      hasDoc: Boolean(letter.doc),
       doc: letter.doc && {
         img: Array.isArray(letter.doc.img)
           ? letter.doc.img

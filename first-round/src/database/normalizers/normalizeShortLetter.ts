@@ -9,6 +9,7 @@ export const normalizeShortLetter = ({
   ...otherFields
 }: Letter): ShortLetter => ({
   ...otherFields,
+  isShort: true,
   shortText: text.substring(0, SHORT_TEXT_LENGTH),
   hasDoc: !!doc,
 });

@@ -5,7 +5,6 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 
-const basePath = path.resolve(__dirname, './');
 const tsConfigPath = path.resolve(__dirname, '../tsconfig.json');
 const isProduction = process.env.MODE === 'production';
 
@@ -25,12 +24,38 @@ module.exports = {
     },
   },
   optimization: {
-    minimizer: [new TerserPlugin({
-      extractComments: false,
-    })],
+    minimize: true,
+    minimizer: [
+      new TerserPlugin({
+        parallel: true,
+        terserOptions: {
+          keep_classnames: false,
+          mangle: true,
+          compress: false,
+          keep_fnames: false,
+          output: {
+            comments: false,
+          }
+        }
+      })
+    ],
   },
   module: {
     rules: [
+      {
+        test: /\.js$/,
+        exclude: /node_modules/,
+        use: [
+          {
+            loader: 'babel-loader',
+            options: {
+              presets: [
+                ["es2015", { "modules": false }] // IMPORTANT
+              ]
+            }
+          }
+        ]
+      },
       {
         test: /\.svg$/,
         use: ['@svgr/webpack'],
@@ -39,10 +64,6 @@ module.exports = {
   },
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
-    new webpack.DefinePlugin({
-      'process.env.isProduction': isProduction,
-      'process.env.basePath': String(basePath),
-    }),
     new MiniCssExtractPlugin({
       filename: 'index.css',
     }),
