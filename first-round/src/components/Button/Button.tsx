@@ -1,4 +1,5 @@
 import classnames from 'classnames';
+import { Link } from 'react-router-dom';
 
 import { ButtonMode, ContentAlign } from './types';
 
@@ -15,6 +16,7 @@ const Button: FC<ButtonProps> = ({
   stretch,
   selected,
   className,
+  href,
 }) => {
   const rootCn = classnames(
     S.root,
@@ -29,6 +31,12 @@ const Button: FC<ButtonProps> = ({
 
   return (
     <div onClick={onClick} className={rootCn}>
+      {href && (
+        <Link
+          className={S.link}
+          to={href}
+        />
+      )}
       {children}
     </div>
   );

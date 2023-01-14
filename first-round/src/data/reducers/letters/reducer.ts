@@ -1,6 +1,14 @@
 import { mergeLetterEntities } from './mergeLetterEntities';
 
-import { SET_LETTER, SET_LETTER_ERROR, SET_LETTER_LOADING, UPDATE_LETTERS, UPDATE_LETTER_DATA } from '../../actions/letters/actions';
+import {
+  SET_LETTER,
+  SET_LETTER_DOC,
+  SET_LETTER_ERROR,
+  SET_LETTER_LOADED,
+  SET_LETTER_LOADING,
+  UPDATE_LETTERS,
+  UPDATE_LETTER_DATA,
+} from '../../actions/letters/actions';
 
 import type { ActionTypes } from '@root/data/actions/letters/types';
 import type { LettersState } from './types';
@@ -18,8 +26,6 @@ export const letters = (state = getInitialState(), action: ActionTypes) => {
     case SET_LETTER:
       return {
         ...state,
-        isLoading: false,
-        hasError: action.letterId === state.activeLetter && state.hasError,
         activeLetter: action.letterId,
       };
     
@@ -44,6 +50,25 @@ export const letters = (state = getInitialState(), action: ActionTypes) => {
       return {
         ...state,
         isLoading: true,
+      };
+    
+    case SET_LETTER_LOADED:
+      return {
+        ...state,
+        isLoading: false,
+        hasError: false,
+      };
+
+    case SET_LETTER_DOC:
+      return {
+        ...state,
+        entities: {
+          ...state.entities,
+          [action.letterId]: {
+            ...state.entities[action.letterId],
+            doc: action.doc,
+          },
+        },
       };
 
     case UPDATE_LETTER_DATA:

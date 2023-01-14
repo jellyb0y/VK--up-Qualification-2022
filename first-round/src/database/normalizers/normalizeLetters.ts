@@ -4,6 +4,7 @@ import { normalizeFolder } from './normalizeFolder';
 import { generateHash } from '@utils/generateHash';
 
 import type { Avatars, DenormalizedData, Folder, Letter, User } from '../types';
+import { IS_PRODUCTION } from '@constants';
 
 export const normalizeLetters = (data: DenormalizedData) => {
   const users: User[] = [];
@@ -11,9 +12,23 @@ export const normalizeLetters = (data: DenormalizedData) => {
   let avatars: Avatars = {};
 
   const letters: Letter[] = data.map((letter) => {
-    const { user: author, avatar: authorAvatar } = normalizeUser(letter.author);
-    const { users: toUsers, avatars: toUsersAvatars } = normalizeUsers(letter.to);
-    const folder = normalizeFolder(letter.folder || 'Входящие');
+    const {
+      author: letterAuthor,
+      to: letterTo,
+      folder: letterFolder,
+      title: letterTitle,
+      date: letterDate,
+      text: letterText,
+      bookmark: letterBookmark,
+      important: letterImportant,
+      read: letterRead,
+      doc: letterDoc,
+      ...unusedParams
+    } = letter;
+
+    const { user: author, avatar: authorAvatar } = normalizeUser(letterAuthor);
+    const { users: toUsers, avatars: toUsersAvatars } = normalizeUsers(letterTo);
+    const folder = normalizeFolder(letterFolder || 'Входящие');
 
     avatars = {
       ...avatars,
@@ -21,7 +36,7 @@ export const normalizeLetters = (data: DenormalizedData) => {
       ...toUsersAvatars,
     };
 
-    const letterId = generateHash(author.id + letter.title + letter.date);
+    const letterId = generateHash(author.id + letterTitle + letterDate);
 
     [...toUsers, author].forEach((user) => {
       if (!users.some(({ id }) => id === user.id)) {
@@ -41,24 +56,29 @@ export const normalizeLetters = (data: DenormalizedData) => {
       ];
     }
 
+    // Трекаем какие параметры остались не разрбраны
+    if (!IS_PRODUCTION && Object.keys(unusedParams).length) {
+      console.warn('[WARNING]: unused letter params:', unusedParams);
+    }
+
     return {
       // Приходится генерировать айдишник, так как его нет в данных
       id: letterId,
       author: author.id,
       to: toUsers.map(({ id }) => id),
-      title: letter.title,
-      text: letter.text,
-      bookmark: letter.bookmark,
-      important: letter.important,
-      read: letter.read,
+      title: letterTitle,
+      text: letterText,
+      bookmark: letterBookmark,
+      important: letterImportant,
+      read: letterRead,
       folder: folder.id,
-      date: letter.date,
-      isShort: false,
-      hasDoc: Boolean(letter.doc),
-      doc: letter.doc && {
-        img: Array.isArray(letter.doc.img)
-          ? letter.doc.img
-          : [letter.doc.img],
+      date: letterDate,
+      type: 'full',
+      hasDoc: Boolean(letterDoc),
+      doc: letterDoc && {
+        img: Array.isArray(letterDoc.img)
+          ? letterDoc.img
+          : [letterDoc.img],
       },
     };
   });

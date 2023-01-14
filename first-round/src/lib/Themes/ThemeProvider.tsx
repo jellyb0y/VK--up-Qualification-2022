@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { Context } from './context';
 
 import { setSelectedTheme } from './setSelectedTheme';
@@ -11,6 +11,10 @@ import type { FC } from 'react';
 
 export const ThemeProvider: FC<ThemeProviderProps> = ({ theme: selectedTheme, children }) => {
   const [theme, setTheme] = useState<Themes>(selectedTheme);
+
+  useEffect(() => {
+    document.body.setAttribute('scheme', selectedTheme);
+  }, []);
 
   const onChangeTheme = useCallback((theme: Themes) => {
     setTheme(theme);

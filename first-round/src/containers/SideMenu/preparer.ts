@@ -1,5 +1,5 @@
 import SideMenu from './SideMenu';
 import { withDataPreparer } from '@lib/DataPreparer/withDataPreparer';
-import { prepareFoldersServer } from '@data/preparers/prepareFolders@client';
+import { prepareFoldersClient } from '@data/preparers/prepareFolders@client';
 
-export default withDataPreparer(SideMenu, [prepareFoldersServer]);
+export default withDataPreparer(SideMenu, [prepareFoldersClient]);

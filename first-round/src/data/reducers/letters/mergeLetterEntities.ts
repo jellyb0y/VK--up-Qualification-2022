@@ -10,8 +10,11 @@ export const mergeLetterEntities = (entitiesA: UnionLettersEntity['entities'], e
   };
 
   [...lettersA, ...lettersB].forEach((letter) => {
-    if (!letter.isShort) {
-      result[letter.id] = letter;
+    if (letter.type === 'full') {
+      result[letter.id] = {
+        ...result[letter.id],
+        ...letter
+      };
     }
   });
 

@@ -24,8 +24,10 @@ const LetterContainer: FC<LetterProps> = ({
   hasError,
   isLoading,
 }) => {
-  if (!letter || isLoading || hasError) {
-    return <LetterStub />;
+  if (!letter || isLoading || hasError || letter?.type === 'short') {
+    return (
+      <LetterStub hasAttach={letter?.hasDoc} />
+    );
   }
 
   return <Letter letter={letter} users={users} />

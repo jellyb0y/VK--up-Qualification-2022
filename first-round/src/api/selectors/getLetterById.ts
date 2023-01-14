@@ -2,7 +2,12 @@ import Database from '@database';
 import { UsersEntity } from '@database/types';
 
 export const getLetterById = (id: string) => {
-  const letter = Database.data.letters.entities[id];
+  const letter = {
+    ...Database.data.letters.entities[id],
+    // Вырезаем документ перед отправкой для ускорения загрузки
+    doc: undefined,
+  };
+
   const users: UsersEntity = {
     entities: {},
     ids: [],

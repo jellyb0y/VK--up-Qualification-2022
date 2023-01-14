@@ -46,9 +46,10 @@ export type ShortLetter = Omit<Letter,
   | 'text'
   | 'to'
   | 'doc'
+  | 'type'
 > & {
   shortText?: string;
-  hasDoc?: boolean;
+  type: 'short';
 };
 
 export type Letter = {
@@ -62,7 +63,8 @@ export type Letter = {
   read: boolean;
   folder: string;
   date: string;
-  isShort?: boolean;
+  type: 'full';
+  hasDoc: boolean;
   doc?: {
     img: string[];
   }

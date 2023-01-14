@@ -16,4 +16,5 @@ export interface ButtonProps {
   mode?: ButtonMode;
   stretch?: boolean;
   selected?: boolean;
+  href?: string;
 }

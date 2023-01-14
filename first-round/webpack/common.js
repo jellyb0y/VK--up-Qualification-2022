@@ -64,6 +64,9 @@ module.exports = {
   },
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
+    new webpack.DefinePlugin({
+      'process.env.isProduction': isProduction,
+    }),
     new MiniCssExtractPlugin({
       filename: 'index.css',
     }),

@@ -94,10 +94,12 @@ export class Server {
       const buffers = [];
 
       for await (const chunk of req) {
-        buffers.push(chunk);
+        if (chunk) {
+          buffers.push(chunk);
+        }
       }
 
-      const body = Buffer.concat(buffers).toString() || undefined;
+      const body = buffers && Buffer.concat(buffers).toString() || undefined;
       const queryString = req.url.match(/\?(.+)$/)?.[1];
       const queryParams = queryString?.split('&').reduce((params, bunch) => {
         const [key, value] = bunch.split('=');

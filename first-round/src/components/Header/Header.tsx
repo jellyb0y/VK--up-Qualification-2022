@@ -1,4 +1,4 @@
-import { Link, useMatch } from 'react-router-dom';
+import { Link, useMatch, useNavigate, useParams } from 'react-router-dom';
 
 import LogoLight from '@assets/images/logo.svg';
 import LogoDark from '@assets/images/logo_dark.svg';
@@ -9,12 +9,21 @@ import * as Routes from '@app/routes';
 
 import S from './Header.scss';
 
-import type { FC } from 'react';
+import { FC, useCallback } from 'react';
+import { getFolderUrl } from '@utils/getFolderUrl';
 
 const Header: FC = () => {
   const isLetterPage = !!useMatch(Routes.LETTER_PATH);
+  const { folder } = useParams<{ folder?: string }>();
+  const navigator = useNavigate();
 
-  const goBack = () => history.back();
+  const goBack = useCallback(() => {
+    if (folder) {
+      navigator(getFolderUrl(folder));
+    } else {
+      history.back();
+    }
+  }, [folder]);
 
   return (
     <div className={S.root}>

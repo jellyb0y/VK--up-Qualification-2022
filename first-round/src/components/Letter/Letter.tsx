@@ -1,29 +1,47 @@
-import { useMemo } from 'react';
+import { useEffect, useMemo } from 'react';
+import { connect } from 'react-redux';
 
 import Avatar from '@components/Avatar';
+import StubComponent from '@components/StubComponent';
 
 import { getDate } from '@utils/getDate';
 import { declination } from '@utils/declination';
+import { getLetterDocResolver } from '@data/resolvers/letters/getLetterDocResolver';
 
 import S from './Letter.scss';
 
 import type { FC } from 'react';
 import type { LetterProps } from './types';
+import type { ActionCreator } from '@reduxjs/toolkit';
+import type { ThunkActionDispatch } from 'redux-thunk';
 
 const MAX_RECEIPIENTS_COUNT = 3;
 
+const mapDispatchToProps = (dispatch: ThunkActionDispatch<ActionCreator<any>>) => ({
+  loadDoc: (id: string) => dispatch(getLetterDocResolver(id)),
+});
+
 const Letter: FC<LetterProps> = ({
   letter: {
+    id: letterId,
     title,
     author,
     date,
     text,
+    hasDoc,
     read,
     doc,
     to,
   },
   users,
+  loadDoc,
 }) => {
+  useEffect(() => {
+    if (hasDoc) {
+      loadDoc(letterId);
+    }
+  }, [hasDoc, loadDoc]);
+
   const { id: authorId, name: authorName, hasAvatar } = users[author];
 
   const recepientsShort = useMemo(() => to.slice(0, MAX_RECEIPIENTS_COUNT), [to]);
@@ -64,16 +82,23 @@ const Letter: FC<LetterProps> = ({
           </div>
         </div>
       </div>
-      {doc && (
-        <div className={S.docs}>
-          <img className={S.docImage} src={doc.img[0]} />
-          <div className={S.docText}>
-            1 файл
-            <span className={S.docDownload}>
-              Скачать <span>(5Mb)</span>
-            </span>
+      {hasDoc && (
+        doc ? (
+          <div className={S.docs}>
+            <img className={S.docImage} src={doc.img[0]} />
+            <div className={S.docText}>
+              1 файл
+              <span className={S.docDownload}>
+                Скачать <span>(5Mb)</span>
+              </span>
+            </div>
           </div>
-        </div>
+        ) : (
+          <div className={S.docs}>
+            <StubComponent className={S.docImageStub} />
+            <StubComponent className={S.docMetaStub} />
+          </div>
+        )
       )}
       <div className={S.body}>
         {text}
@@ -82,4 +107,4 @@ const Letter: FC<LetterProps> = ({
   );
 };
 
-export default Letter;
+export default connect(null, mapDispatchToProps)(Letter);

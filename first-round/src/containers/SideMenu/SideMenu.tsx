@@ -1,6 +1,6 @@
-import { useCallback } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { connect } from 'react-redux';
-import { Link, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import classnames from 'classnames';
 
 import Button, { ButtonMode, ContentAlign } from '@components/Button';
@@ -79,12 +79,17 @@ const SideMenu: FC<SideMenuProps> = ({ folders }) => {
     folder: activeFolder = folders.activeFolder
   } = useParams<{ folder?: string }>();
 
+  const [isLoaded, setLoaded] = useState(false);
   const screenType = useScreenObserver();
   const { theme, setTheme } = useThemes();
 
   const foldersSort = screenType !== ScreenType.Tablet ? DESKTOP_FOLDERS_SORT : TABLET_FOLDERS_SORT;
   const foldersIds = folders.ids.length > 0 ? folders.ids : foldersSort;
   const orderedFolders = getFoldersOrder(foldersSort, foldersIds);
+
+  useEffect(() => {
+    setLoaded(true);
+  }, []);
 
   const changeTheme = useCallback(() => {
     const maxThemeIndex = screenType === ScreenType.Desktop ? 3 : 2;
@@ -124,27 +129,28 @@ const SideMenu: FC<SideMenuProps> = ({ folders }) => {
             const url = id === DEFAULT_FOLDER ? ROOT_PATH : getFolderUrl(id);
 
             return (
-              <Link key={id} className={S.listItem} to={url}>
-                <Button
-                  stretch
-                  selected={id === activeFolder}
-                  contentAlign={ContentAlign.Left}
-                  mode={ButtonMode.Transparent}
-                  className={S.button}
-                >
-                  <span className={S.iconWrapper}>
-                    <IconComponent className={S.icon}/>
-                  </span>
-                  {name ? (
-                    <span className={S.buttonName}>{name}</span>
-                  ) : (
-                    <StubComponent
-                      className={classnames(S.buttonName, S.buttonNameStub)}
-                    />
-                  )}
-                  {/* <span className={S.counter}>{letters.length}</span> */}
-                </Button>
-              </Link>
+              <Button
+                key={id}
+                href={url}
+                stretch
+                // Fix: несовпадение html при гидрации
+                selected={isLoaded && id === activeFolder}
+                contentAlign={ContentAlign.Left}
+                mode={ButtonMode.Transparent}
+                className={classnames(S.listItem, S.button)}
+              >
+                <span className={S.iconWrapper}>
+                  <IconComponent className={S.icon}/>
+                </span>
+                {name ? (
+                  <span className={S.buttonName}>{name}</span>
+                ) : (
+                  <StubComponent
+                    className={classnames(S.buttonName, S.buttonNameStub)}
+                  />
+                )}
+                {/* <span className={S.counter}>{letters.length}</span> */}
+              </Button>
             );
           })}
         </div>

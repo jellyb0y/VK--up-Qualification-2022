@@ -36,5 +36,22 @@
 .content {
   height: 200px;
   border-radius: 12px;
-  margin-top: 24px;
+  margin-top: 28px;
+}
+
+.attach {
+  margin-top: 20px;
+}
+
+.photo {
+  border-radius: 12px;
+  height: 190px;
+  max-width: 300px;
+}
+
+.photoMeta {
+  height: 14px;
+  max-width: 200px;
+  margin-top: 15px;
+  border-radius: 7px;
 }

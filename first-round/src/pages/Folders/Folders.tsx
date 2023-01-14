@@ -8,18 +8,17 @@ import S from './Folders.scss';
 import type { FC } from 'react';
 import type { FoldersProps } from './types';
 import type { State } from '@data/types';
-import type { ShortLetter } from '@database/types';
+import type { Letter, ShortLetter } from '@database/types';
 
 const mapStateToProps = (state: State) => {
   const activeFolder = state.folders.activeFolder;
   const lettersIds = state.folders.entities[activeFolder]?.letters || [];
   const letters = lettersIds.reduce((acc, id) => {
-    if (state.letters.entities[id]) {
-      acc.push(state.letters.entities[id]);
-    }
+    const letter = state.letters.entities[id];
+    acc.push(letter);
 
     return acc;
-  }, [] as ShortLetter[]);
+  }, [] as (ShortLetter | Letter)[]);
 
   return {
     hasError: state.folders.hasError,
@@ -35,7 +34,6 @@ const Folders: FC<FoldersProps> = ({
   letters,
   users,
   hasError,
-  isLoading,
 }) => {
   const sortedLetters = letters.sort(({ date: dateA }, { date: dateB }) => (
     new Date(dateB).getTime() - new Date(dateA).getTime()
@@ -43,8 +41,7 @@ const Folders: FC<FoldersProps> = ({
 
   const isListReady = (
     sortedLetters.length &&
-    !hasError &&
-    !isLoading
+    !hasError
   );
 
   return (
