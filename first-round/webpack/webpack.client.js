@@ -6,15 +6,19 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 
+const imageInlineLoader = path.resolve(__dirname, './loaders/image-inline-loader.js');
+
 const isProduction = process.env.MODE === 'production';
 const tsConfigPath = path.resolve(__dirname, '../tsconfig.json');
 const withBundleAnalyzer = Boolean(process.env.BUNDLE_ANALYZE);
 
 const common = require('./common');
+const { getThemesEntries } = require('./utils/getThemesEntries');
 
 module.exports = merge(common, {
   entry: {
     main: path.resolve(__dirname, '../src/entries/client/index.tsx'),
+    ...getThemesEntries(),
   },
   output: {
     path: path.resolve(__dirname, '../dist'),
@@ -26,6 +30,9 @@ module.exports = merge(common, {
     new HtmlWebpackPlugin({
       template: path.resolve(__dirname, '../src/assets/html/index.html'),
       filename: path.resolve(__dirname, '../dist/index.html'),
+      chunks: [
+        'main',
+      ],
     }),
     new FaviconsWebpackPlugin({
       logo: path.resolve(__dirname, '../src/assets/images/favicon.svg'),
@@ -85,11 +92,5 @@ module.exports = merge(common, {
         ]
       },
     ],
-  },
-  devServer: {
-    host: '0.0.0.0',
-    port: 3000,
-    hot: true,
-    historyApiFallback: true,
   },
 });

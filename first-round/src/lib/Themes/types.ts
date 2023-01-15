@@ -1,14 +1,25 @@
 export interface ThemeProviderProps {
-  theme: Themes;
+  scheme: Schemes;
+  theme?: string;
 }
 
-export enum Themes {
+export enum Schemes {
   Light = 'light',
   Dark = 'dark',
   System = 'system',
 }
 
 export type Context = {
-  theme: Themes;
-  setTheme: (theme: Themes) => void;
+  scheme: Schemes;
+  theme: string;
+  setScheme: (scheme: Schemes) => void;
+  setTheme: (theme: string) => void;
 };
+
+export type ThemeConfig = {
+  color?: string;
+  image?: string;
+  scheme: Schemes;
+};
+
+export type ThemeRegistry = Record<string, ThemeConfig>;

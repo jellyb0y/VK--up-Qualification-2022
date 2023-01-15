@@ -8,6 +8,11 @@
   width: 200px;
   margin-right: 16px;
   margin-left: 4px;
+
+  position: sticky;
+  top: 0;
+
+  color: var(--primaryContrastTextColor);
 }
 
 .list {
@@ -53,19 +58,12 @@
 }
 
 .icon {
-  fill: var(--primaryTextColor);
+  fill: var(--primaryContrastTextColor);
 }
 
-.colorPickerIcon {
+.settingsIcon {
   margin-right: 10px;
-
-  path {
-    stroke: var(--primaryTextColor);
-  }
-
-  rect {
-    fill: var(--primaryTextColor);
-  }
+  fill: var(--primaryContrastTextColor);
 }
 
 .counter {
@@ -77,12 +75,17 @@
 }
 
 .addFolderButton {
-  color: var(--secondaryTextColor);
+  color: var(--secondaryContrastTextColor);
 }
 
 .plusIcon {
   margin-right: 8px;
-  fill: var(--secondaryTextColor);
+  fill: var(--secondaryContrastTextColor);
+}
+
+.buttonName {
+  font-size: 15px;
+  line-height: 20px;
 }
 
 .buttonNameStub {
@@ -91,9 +94,9 @@
   border-radius: 7px;
 }
 
-@include useDarkTheme {
+@include useDarkScheme {
   .list {
-    border-bottom: 1px solid rgba(0, 0, 0, 0.4);
+    border-bottom: 1px solid var(--separatorContrastColor);
   }
 }
 
@@ -116,7 +119,7 @@
     padding: 0;
   }
 
-  .colorPickerIcon,
+  .settingsIcon,
   .iconWrapper {
     margin-right: 0;
   }

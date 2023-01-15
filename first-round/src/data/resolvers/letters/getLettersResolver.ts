@@ -4,8 +4,9 @@ import { getLetters } from '@data/resourses/letters/getLetters';
 import { setFolderAction, setFoldersErrorAction, setFoldersLoadingAction } from '@data/actions/folders';
 
 import type { Dispatch } from '@reduxjs/toolkit';
+import { resetFiltersAction } from '@data/actions/filters';
 
-export const getLettersResolver = (folder: string) => {
+export const getLettersResolver = (folder: string, resetFilters = false) => {
   return (dispatch: Dispatch) => {
     dispatch(setFoldersLoadingAction());
 
@@ -14,6 +15,10 @@ export const getLettersResolver = (folder: string) => {
         dispatch(updateUsersAction(users));
         dispatch(updateLettersAction(letters));
         dispatch(setFolderAction(folder));
+
+        if (resetFilters) {
+          dispatch(resetFiltersAction());
+        }
       })
       .catch((error) => {
         console.error(error);

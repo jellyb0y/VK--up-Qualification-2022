@@ -17,12 +17,14 @@ const Button: FC<ButtonProps> = ({
   selected,
   className,
   href,
+  ref,
 }) => {
   const rootCn = classnames(
     S.root,
     S[`contentAlign_${contentAlign}`],
     {
       [S.primary]: mode === ButtonMode.Primary,
+      [S.contrast]: mode === ButtonMode.Contrast,
       [S.stretch]: stretch,
       [S.selected]: selected,
     },
@@ -30,7 +32,7 @@ const Button: FC<ButtonProps> = ({
   );
 
   return (
-    <div onClick={onClick} className={rootCn}>
+    <div ref={ref} onClick={onClick} className={rootCn}>
       {href && (
         <Link
           className={S.link}

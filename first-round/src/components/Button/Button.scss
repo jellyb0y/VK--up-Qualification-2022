@@ -40,13 +40,20 @@
   color: #333333;
   font-weight: 700;
 
-  @include useDarkTheme {
+  @include useDarkScheme {
     border: 1px solid rgba(0, 0, 0, 0.4);
   }
 
   &.selected,
   &:hover {
     background-color: var(--primaryButtonBgColor);
+  }
+}
+
+.contrast {
+  &.selected,
+  &:hover {
+    background-color: var(--activeContrastButtonBgColor);
   }
 }
 

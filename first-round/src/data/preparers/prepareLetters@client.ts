@@ -16,7 +16,7 @@ export const prepareLettersClient = createPreparer(async (dispatch, getState) =>
     return;
   }
 
-  dispatch(getLettersResolver(folder));
+  dispatch(getLettersResolver(folder, !!activeFolder));
 }, {
   side: Side.Client,
   every: true,

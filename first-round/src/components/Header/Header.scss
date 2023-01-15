@@ -3,10 +3,14 @@
 .root {
   display: flex;
   flex-shrink: 0;
+  justify-content: space-between;
   align-items: center;
   height: 56px;
-  background-color: var(--primaryBgColor);
+  background-color: var(--headerBgColor);
   filter: drop-shadow(0px 0px 16px rgba(2, 13, 41, 0.12));
+  z-index: 1;
+  position: relative;
+  color: var(--primaryContrastTextColor);
 }
 
 .logoLight,
@@ -23,11 +27,15 @@
 .backButton {
   margin-left: 16px;
   font-weight: 500;
+
+  color: var(--primaryHeaderTextColor);
   
   &Arrow {
     width: 20px;
     height: 20px;
     margin-right: 12px;
+
+    fill: var(--primaryHeaderTextColor);
 
     @include useMediaTablet {
       margin-right: 0;
@@ -41,7 +49,34 @@
   }
 }
 
-@include useLightTheme {
+.filters {
+  display: flex;
+  align-items: center;
+  margin-right: 12px;
+  font-weight: 500;
+
+  color: var(--primaryHeaderTextColor);
+}
+
+.filterArrow {
+  margin-left: 10px;
+  width: 8px;
+  height: 5px;
+  transition-duration: .2s;
+  fill: var(--primaryHeaderTextColor);
+
+  &Reverted {
+    transform: rotate(180deg);
+  }
+}
+
+.filtersContainer {
+  position: absolute;
+  top: calc(100% - 4px);
+  right: 12px;
+}
+
+@include useLightScheme {
   .logoLight {
     display: block;
   }
@@ -51,16 +86,12 @@
   }
 }
 
-@include useDarkTheme {
+@include useDarkScheme {
   .logoLight {
     display: none;
   }
 
   .logoDark {
     display: block;
-  }
-
-  .backButton svg {
-    fill: #D9DADD;
   }
 }

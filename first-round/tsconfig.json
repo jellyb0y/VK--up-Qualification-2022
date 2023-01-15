@@ -16,6 +16,7 @@
     "paths": {
       "@app": ["./src/app"],
       "@app/*": ["./src/app/*"],
+      "@themes": ["./src/themes"],
       "@api/*": ["./src/api/*"],
       "@lib/*": ["./src/lib/*"],
       "@database": ["./src/database"],

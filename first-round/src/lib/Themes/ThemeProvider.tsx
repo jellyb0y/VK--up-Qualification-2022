@@ -1,34 +1,52 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { Context } from './context';
 
+import { setSelectedScheme } from './setSelectedScheme';
 import { setSelectedTheme } from './setSelectedTheme';
 
-import { Themes } from './types';
-import { IS_SERVER } from '@utils/isServer';
+import { Schemes } from './types';
 
 import type { ThemeProviderProps } from './types';
 import type { FC } from 'react';
+import { getThemeConfig } from './themeRegistry';
 
-export const ThemeProvider: FC<ThemeProviderProps> = ({ theme: selectedTheme, children }) => {
-  const [theme, setTheme] = useState<Themes>(selectedTheme);
+export const ThemeProvider: FC<ThemeProviderProps> = ({
+  scheme: selectedScheme,
+  theme: selectedTheme,
+  children,
+}) => {
+  const [scheme, setScheme] = useState<Schemes>(selectedScheme);
+  const [theme, setTheme] = useState<string>(selectedTheme);
 
   useEffect(() => {
-    document.body.setAttribute('scheme', selectedTheme);
+    setSelectedScheme(selectedScheme);
+    setSelectedTheme(selectedTheme);
   }, []);
 
-  const onChangeTheme = useCallback((theme: Themes) => {
-    setTheme(theme);
+  const onChangeScheme = useCallback((scheme: Schemes) => {
+    setScheme(scheme);
+    setTheme('');
 
-    if (!IS_SERVER) {
-      setSelectedTheme(theme);
-      document.body.setAttribute('scheme', theme);
-    }
+    setSelectedTheme('');
+    setSelectedScheme(scheme);
+  }, []);
+
+  const onChangeTheme = useCallback((theme: string | null) => {
+    const themeScheme = getThemeConfig(theme)?.scheme || scheme;
+
+    setTheme(theme);
+    setScheme(themeScheme);
+
+    setSelectedTheme(theme);
+    setSelectedScheme(themeScheme);
   }, []);
 
   const context = useMemo(() => ({
     theme,
+    scheme,
+    setScheme: onChangeScheme,
     setTheme: onChangeTheme,
-  }), [theme, onChangeTheme]);
+  }), [scheme, theme, onChangeScheme, onChangeTheme]);
 
   return (
     <Context.Provider value={context}>

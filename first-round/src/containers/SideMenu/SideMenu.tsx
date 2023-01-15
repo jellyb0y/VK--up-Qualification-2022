@@ -16,22 +16,21 @@ import TrashIcon from '@assets/images/trash.svg';
 import PlusIcon from '@assets/images/plus.svg';
 import BurgerIcon from '@assets/images/burger.svg';
 import PancilIcon from '@assets/images/pancil.svg';
-import ColorPickerIcon from '@assets/images/color_picker.svg';
+import SettingsIcon from '@assets/images/gear.svg';
 
 import { getFoldersOrder } from './utils/getFoldersOrder';
 import { getFolderUrl } from '@utils/getFolderUrl';
 
 import { ScreenType, useScreenObserver } from '@root/hooks/useScreenObserver';
-import { useThemes } from '@lib/Themes/useTheme';
 
 import { ROOT_PATH } from '@app/routes';
-import { Themes } from '@lib/Themes/types';
 
 import S from './SideMenu.scss';
 
 import type { FC } from 'react';
 import type { State } from '@data/types';
 import type { SideMenuProps, FolderIcons } from './types';
+import Settings from '@containers/Settings/Settings';
 
 const DEFAULT_FOLDER = 'incomings';
 const DEFAULT_ICON = ImportantIcon;
@@ -64,40 +63,35 @@ const TABLET_FOLDERS_SORT = [
   'trash',
 ];
 
-const THEMES_NAMES = {
-  [Themes.Dark]: 'темная',
-  [Themes.Light]: 'светлая',
-  [Themes.System]: 'системная',
-}
-
 const mapStateToProps = (state: State) => ({
   folders: state.folders,
 });
 
 const SideMenu: FC<SideMenuProps> = ({ folders }) => {
+  const [isSettingsOpen, setSettingsOpen] = useState(false);
+
   const {
     folder: activeFolder = folders.activeFolder
   } = useParams<{ folder?: string }>();
 
   const [isLoaded, setLoaded] = useState(false);
   const screenType = useScreenObserver();
-  const { theme, setTheme } = useThemes();
 
   const foldersSort = screenType !== ScreenType.Tablet ? DESKTOP_FOLDERS_SORT : TABLET_FOLDERS_SORT;
   const foldersIds = folders.ids.length > 0 ? folders.ids : foldersSort;
   const orderedFolders = getFoldersOrder(foldersSort, foldersIds);
 
+  const openSettings = useCallback(() => {
+    setSettingsOpen(true);
+  }, []);
+
+  const closeSettings = useCallback(() => {
+    setSettingsOpen(false);
+  }, []);
+
   useEffect(() => {
     setLoaded(true);
   }, []);
-
-  const changeTheme = useCallback(() => {
-    const maxThemeIndex = screenType === ScreenType.Desktop ? 3 : 2;
-    const themeList = Object.keys(THEMES_NAMES);
-    const themeIndex = themeList.indexOf(theme);
-    const nextThemeIndex = (themeIndex + 1) % maxThemeIndex;
-    setTheme(themeList[nextThemeIndex] as Themes);
-  }, [theme, screenType]);
 
   return (
     <div className={S.root}>
@@ -117,7 +111,7 @@ const SideMenu: FC<SideMenuProps> = ({ folders }) => {
               stretch
               key="burger"
               contentAlign={ContentAlign.Center}
-              mode={ButtonMode.Transparent}
+              mode={ButtonMode.Contrast}
               className={S.button}
             >
               <BurgerIcon className={S.icon}/>
@@ -136,7 +130,7 @@ const SideMenu: FC<SideMenuProps> = ({ folders }) => {
                 // Fix: несовпадение html при гидрации
                 selected={isLoaded && id === activeFolder}
                 contentAlign={ContentAlign.Left}
-                mode={ButtonMode.Transparent}
+                mode={ButtonMode.Contrast}
                 className={classnames(S.listItem, S.button)}
               >
                 <span className={S.iconWrapper}>
@@ -157,7 +151,7 @@ const SideMenu: FC<SideMenuProps> = ({ folders }) => {
         <Button
           stretch
           contentAlign={ContentAlign.Left}
-          mode={ButtonMode.Transparent}
+          mode={ButtonMode.Contrast}
           className={classnames(S.addFolderButton, S.button)}
         >
           <PlusIcon className={S.plusIcon} />
@@ -167,13 +161,14 @@ const SideMenu: FC<SideMenuProps> = ({ folders }) => {
       <Button
         stretch
         contentAlign={ContentAlign.Left}
-        mode={ButtonMode.Transparent}
+        mode={ButtonMode.Contrast}
         className={S.button}
-        onClick={changeTheme}
+        onClick={openSettings}
       >
-        <ColorPickerIcon className={S.colorPickerIcon} />
-        <span className={S.buttonName}>Тема: {THEMES_NAMES[theme]}</span>
+        <SettingsIcon className={S.settingsIcon} />
+        <span className={S.buttonName}>Настройки</span>
       </Button>
+      {isSettingsOpen && <Settings onClose={closeSettings} />}
     </div>
   );
 };

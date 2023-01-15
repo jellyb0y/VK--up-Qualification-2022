@@ -1,3 +1,5 @@
+import type { RefObject } from 'react';
+
 export enum ContentAlign {
   Left = 'left',
   Center = 'center',
@@ -7,6 +9,7 @@ export enum ContentAlign {
 export enum ButtonMode {
   Transparent = 'transparent',
   Primary = 'primary',
+  Contrast = 'contrast',
 }
 
 export interface ButtonProps {
@@ -17,4 +20,5 @@ export interface ButtonProps {
   stretch?: boolean;
   selected?: boolean;
   href?: string;
+  ref?: RefObject<HTMLDivElement>;
 }

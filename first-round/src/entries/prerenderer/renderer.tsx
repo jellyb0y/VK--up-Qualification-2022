@@ -15,11 +15,11 @@ import {
   ROOT_PATH,
 } from '@constants';
 
-import { Themes } from '@lib/Themes/types';
+import { Schemes } from '@lib/Themes/types';
 
 const stylesLookup = discoverProjectStyles(ROOT_PATH);
 
-export const renderer = async (url: string, theme: Themes): Promise<string> => {
+export const renderer = async (url: string, scheme: Schemes): Promise<string> => {
   try {
     await stylesLookup;
 
@@ -30,7 +30,7 @@ export const renderer = async (url: string, theme: Themes): Promise<string> => {
     const appHTML = renderToString(
       <StaticRouter location={url}>
         <PreparerProvider store={store}>
-          <ThemeProvider theme={theme}>
+          <ThemeProvider scheme={scheme}>
             <App store={store} />
           </ThemeProvider>
         </PreparerProvider>
@@ -51,7 +51,7 @@ export const renderer = async (url: string, theme: Themes): Promise<string> => {
         helmet.script.toString(),
         criticalStyles,
       ],
-      theme,
+      scheme,
     );
   } catch (error) {
     console.error(error);

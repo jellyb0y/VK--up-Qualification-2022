@@ -6,7 +6,7 @@ $tabletWidth: 768px;
   }
 }
 
-@mixin useLightTheme {
+@mixin useLightScheme {
   body[scheme="system"] {
     @media (prefers-color-scheme: light) {
       @content;
@@ -18,7 +18,7 @@ $tabletWidth: 768px;
   }
 }
 
-@mixin useDarkTheme {
+@mixin useDarkScheme {
   body[scheme="system"] {
     @media (prefers-color-scheme: dark) {
       @content;

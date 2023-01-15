@@ -1,0 +1,27 @@
+:root {
+  body[scheme][theme="soft_white"] {
+    --bgColor: #DDF3FF;
+    --primaryBgColor: #FFFFFF;
+    --primaryHoverBgColor: rgba(0, 16, 61, 0.04);
+    --popupBgColor: #FFFFFF;
+    --popupHoverBgColor: #F5F5F7;
+    --headerBgColor: #535f6b;
+    --separatorColor: rgba(0, 16, 61, 0.12);
+    --separatorContrastColor: rgba(0, 16, 61, 0.12);
+    --activeContrastButtonBgColor: rgba(0, 16, 61, 0.08);
+    --stubBgColor: #E9EAEC;
+
+    --greyColor: #A5A7AD;
+    --blueColor: #005FF9;
+    --redColor: #FC2C38;
+
+    --primaryHeaderTextColor: #E7E8EA;
+    --primaryContrastTextColor: #2c2d2e;
+    --secondaryContrastTextColor: rgba(44, 45, 46, 0.48);
+    --lightContrastTextColor: #87898F;
+
+    --primaryTextColor: #2c2d2e;
+    --secondaryTextColor: rgba(44, 45, 46, 0.48);
+    --lightTextColor: #87898F;
+  }
+}

@@ -60,6 +60,17 @@ module.exports = {
         test: /\.svg$/,
         use: ['@svgr/webpack'],
       },
+      {
+        test: /\.module\.(png|jpg|gif)$/i,
+        use: [
+          {
+            loader: 'url-loader',
+            options: {
+              limit: false,
+            },
+          },
+        ],
+      },
     ],
   },
   plugins: [
@@ -68,7 +79,7 @@ module.exports = {
       'process.env.isProduction': isProduction,
     }),
     new MiniCssExtractPlugin({
-      filename: 'index.css',
+      filename: '[name].css',
     }),
   ],
 };

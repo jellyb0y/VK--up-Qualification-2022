@@ -3,6 +3,8 @@ import { connect } from 'react-redux';
 import LetterComponent from '@components/LetterShortCut';
 import FoldersListStub from '@components/FoldersListStub';
 
+import { applyFilters } from './applyFilters';
+
 import S from './Folders.scss';
 
 import type { FC } from 'react';
@@ -20,11 +22,14 @@ const mapStateToProps = (state: State) => {
     return acc;
   }, [] as (ShortLetter | Letter)[]);
 
+  const filters = state.filters;
+  const filteredLetters = applyFilters(filters, letters);
+
   return {
     hasError: state.folders.hasError,
     isLoading: state.folders.isLoading,
     activeFolder,
-    letters,
+    letters: filteredLetters,
     users: state.users.entities,
   };
 };
