@@ -29,6 +29,11 @@ $settingHeight: 400px;
   }
 }
 
+.buttonName {
+  display: flex;
+  align-items: center;
+}
+
 .selectedButton {
   font-weight: 700;
 }
@@ -36,6 +41,10 @@ $settingHeight: 400px;
 .menu {
   flex-grow: 1;
   padding: 26px 46px 26px 26px;
+}
+
+.flag {
+  margin-left: 8px;
 }
 
 @keyframes slide-up {

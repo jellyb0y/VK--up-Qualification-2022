@@ -50,6 +50,24 @@
   }
 }
 
+.secondary {
+  overflow: hidden;
+  position: relative;
+  background-color: var(--blueColor);
+  color: #FFFFFF;
+  transition: filter .1s ease-in;
+
+  &:hover {
+    background-color: var(--blueColor);
+    filter: saturate(120%);
+  }
+
+  &.selected,
+  &:active {
+    filter: brightness(90%);
+  }
+}
+
 .contrast {
   &.selected,
   &:hover {

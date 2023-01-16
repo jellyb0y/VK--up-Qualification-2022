@@ -7,6 +7,8 @@ import StubComponent from '@components/StubComponent';
 import { getDate } from '@utils/getDate';
 import { declination } from '@utils/declination';
 import { getLetterDocResolver } from '@data/resolvers/letters/getLetterDocResolver';
+import { useLanguages } from '@lib/Languages/useLanguages';
+import { useLangContext } from '@lib/Languages/useContext';
 
 import S from './Letter.scss';
 
@@ -36,6 +38,9 @@ const Letter: FC<LetterProps> = ({
   users,
   loadDoc,
 }) => {
+  const applyLanguage = useLanguages();
+  const { lang } = useLangContext();
+
   useEffect(() => {
     if (hasDoc) {
       loadDoc(letterId);
@@ -50,12 +55,17 @@ const Letter: FC<LetterProps> = ({
     const recepientsList = recepientsShort.reduce((acc, recepientId) => {
       acc.push(users[recepientId].name);
       return acc;
-    }, ['Вы']);
+    }, [applyLanguage(['Вы', 'You'])]);
 
     return `${recepientsList.join(', ')}`;
   }, [recepientsShort, users]);
 
   const recepientsLast = to.length - recepientsShort.length;
+
+  const recepientsText = applyLanguage([
+    declination(recepientsLast, ['получатель', 'получателя', 'получателей']),
+    declination(recepientsLast, ['more recipient', 'more recipients', 'more recipients']),
+  ]);
 
   return (
     <div className={S.root}>
@@ -68,15 +78,16 @@ const Letter: FC<LetterProps> = ({
         <div className={S.headContent}>
           <div className={S.headMain}>
             {authorName}
-            <span className={S.date}>{getDate(date, true)}</span>
+            <span className={S.date}>{getDate(date, true, lang)}</span>
           </div>
           <div className={S.recepients}>
-            Кому: {recepients}{' '}
+            {applyLanguage(['Кому:', 'To:'])}
+            {' '}{recepients}{' '}
             {recepientsLast ? (
               <span className={S.recepientsMore}>
-                и еще {recepientsLast} {declination(
-                  recepientsLast, ['получатель', 'получателя', 'получателей']
-                )}
+                {applyLanguage(['и еще', 'and'])}
+                {' '}{recepientsLast}{' '}
+                {recepientsText}
               </span>
             ) : null}
           </div>
@@ -87,9 +98,10 @@ const Letter: FC<LetterProps> = ({
           <div className={S.docs}>
             <img className={S.docImage} src={doc.img[0]} />
             <div className={S.docText}>
-              1 файл
+              1 {applyLanguage(['файл', 'file'])}
               <span className={S.docDownload}>
-                Скачать <span>(5Mb)</span>
+                {applyLanguage(['Скачать', 'Download'])}
+                {' '}<span>(5Mb)</span>
               </span>
             </div>
           </div>

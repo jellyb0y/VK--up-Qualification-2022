@@ -6,6 +6,9 @@ import FilterItem from './components/FilterItem/FilterItem';
 import SelectedBookmarkIcon from '@assets/images/bookmark_selected.svg';
 import AttachIcon from '@assets/images/attach.svg';
 
+import { updateFiltersResolver } from '@data/resolvers/filters/updateFiltersResolver';
+import { useLanguages } from '@lib/Languages/useLanguages';
+
 import {
   resetFiltersAction,
   toogleAttachmentsFilterAction,
@@ -18,9 +21,8 @@ import S from './Filters.scss';
 import type { FC } from 'react';
 import type { FiltersProps } from './types';
 import type { State } from '@data/types';
-import type { ActionCreator, Dispatch } from '@reduxjs/toolkit';
+import type { ActionCreator } from '@reduxjs/toolkit';
 import type { ThunkActionDispatch } from 'redux-thunk';
-import { updateFiltersResolver } from '@data/resolvers/filters/updateFiltersResolver';
 
 const mapDispatchToProps = (dispatch: ThunkActionDispatch<ActionCreator<any>>) => ({
   resetFilters: () => dispatch(updateFiltersResolver(resetFiltersAction)),
@@ -43,6 +45,7 @@ const Filters: FC<FiltersProps> = ({
   toogleReadFilter,
 }) => {
   const containerRef = useRef<HTMLDivElement>();
+  const applyLanguage = useLanguages();
 
   const handleClick = useCallback((event: Event) => {
     const target = event.target as HTMLElement;
@@ -85,7 +88,7 @@ const Filters: FC<FiltersProps> = ({
         onClick={createToogleHandler(resetFilters)}
         isSelected={isFiltersEmpty}
       >
-        Все письма
+        {applyLanguage(['Все письма', 'All messages'])}
       </FilterItem>
       <FilterItem
         onClick={createToogleHandler(toogleReadFilter)}
@@ -96,7 +99,7 @@ const Filters: FC<FiltersProps> = ({
             <div className={S.readMark} />
           </div>
         </div>
-        Непрочитанные
+        {applyLanguage(['Непрочитанные', 'Unread'])}
       </FilterItem>
       <FilterItem
         onClick={createToogleHandler(toogleBookmarkFilter)}
@@ -105,7 +108,7 @@ const Filters: FC<FiltersProps> = ({
         <div className={S.iconContainer}>
           <SelectedBookmarkIcon className={S.bookmarkIcon} />
         </div>
-        С флажком
+        {applyLanguage(['С флажком', 'Flagged'])}
       </FilterItem>
       <FilterItem
         onClick={createToogleHandler(toogleAttachmentsFilter)}
@@ -114,7 +117,7 @@ const Filters: FC<FiltersProps> = ({
         <div className={S.iconContainer}>
           <AttachIcon className={S.attachIcon} />
         </div>
-        С вложениями
+        {applyLanguage(['С вложениями', 'With attachments'])}
       </FilterItem>
     </div>
   );

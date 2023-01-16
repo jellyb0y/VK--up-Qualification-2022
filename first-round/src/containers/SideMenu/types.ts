@@ -5,6 +5,6 @@ export interface SideMenuProps {
   folders: FoldersState;
 }
 
-export type FolderIcons = {
-  [key: string]: FC<{ className?: string }>;
-}
+export type FolderIcons = Record<string, FC<{ className?: string }>>;
+
+export type FolderTranslations = Record<string, string>;

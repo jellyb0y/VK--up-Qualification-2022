@@ -24,6 +24,7 @@ const Button: FC<ButtonProps> = ({
     S[`contentAlign_${contentAlign}`],
     {
       [S.primary]: mode === ButtonMode.Primary,
+      [S.secondary]: mode === ButtonMode.Secondary,
       [S.contrast]: mode === ButtonMode.Contrast,
       [S.stretch]: stretch,
       [S.selected]: selected,

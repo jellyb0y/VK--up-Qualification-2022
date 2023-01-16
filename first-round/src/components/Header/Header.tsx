@@ -10,6 +10,7 @@ import Button from '@components/Button';
 import Filters from '@components/Filters';
 
 import { getFolderUrl } from '@utils/getFolderUrl';
+import { useLanguages } from '@lib/Languages/useLanguages';
 
 import * as Routes from '@app/routes';
 
@@ -23,6 +24,7 @@ const Header: FC = () => {
   const isLetterPage = !!useMatch(Routes.LETTER_PATH);
   const { folder } = useParams<{ folder?: string }>();
   const navigator = useNavigate();
+  const applyLanguage = useLanguages();
 
   useEffect(() => {
     if (isLetterPage) {
@@ -59,7 +61,9 @@ const Header: FC = () => {
       {isLetterPage ? (
         <Button onClick={goBack} className={S.backButton}>
           <BackArrow className={S.backButtonArrow} />
-          <span className={S.backButtonText}>Вернуться</span>
+          <span className={S.backButtonText}>
+            {applyLanguage(['Вернуться', 'Return'])}
+          </span>
         </Button>
       ) : (
         <Link to={Routes.ROOT_PATH}>
@@ -69,7 +73,8 @@ const Header: FC = () => {
       )}
       {!isLetterPage && (
         <Button onClick={openFilters} className={S.filters}>
-          Фильтр <ArrowBottom className={filterArrowCn} />
+          {applyLanguage(['Фильтр', 'Filter'])}
+          <ArrowBottom className={filterArrowCn} />
         </Button>
       )}
       {isFiltersOpen && (

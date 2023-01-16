@@ -1,13 +1,19 @@
 import classnames from 'classnames';
-import { useCallback, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 
+import RuFlag from '@assets/images/ru_lan.svg';
+import EnFlag from '@assets/images/en_lan.svg';
 import Button, { ButtonMode, ContentAlign } from '@components/Button';
+import Themes from './components/Themes';
+
+import { useLanguages } from '@lib/Languages/useLanguages';
+import { useLangContext } from '@lib/Languages/useContext';
 
 import S from './Settings.scss';
 
-import { FC } from 'react';
+import type { FC } from 'react';
 import type { SettingsProps } from './types';
-import Themes from './components/Themes';
+import { Languages as LanguagesType } from '@lib/Languages/types';
 import Languages from './components/Languages';
 
 enum MenuType {
@@ -18,11 +24,25 @@ enum MenuType {
 const Settings: FC<SettingsProps> = ({
   containerRef,
 }) => {
+  const { lang } = useLangContext();
+  const applyLanguage = useLanguages();
   const [menuType, setMenuType] = useState<MenuType>(MenuType.Themes);
 
   const createSideBarHandler = useCallback((type: MenuType) => () => {
     setMenuType(type);
   }, []);
+
+  const language = useMemo(() => lang === LanguagesType.Ru ? (
+    <>
+      Русский
+      <RuFlag className={S.flag} />
+    </>
+  ) : (
+    <>
+      English
+      <EnFlag className={S.flag} />
+    </>
+  ), [lang]);
 
   return (
     <div ref={containerRef} className={S.root}>
@@ -37,7 +57,9 @@ const Settings: FC<SettingsProps> = ({
             [S.selectedButton]: menuType === MenuType.Themes
           })}
         >
-          <span className={S.buttonName}>Внещний вид</span>
+          <span className={S.buttonName}>
+            {applyLanguage(['Внещний вид', 'Interface'])}
+          </span>
         </Button>
         <Button
           stretch
@@ -49,7 +71,9 @@ const Settings: FC<SettingsProps> = ({
             [S.selectedButton]: menuType === MenuType.Language
           })}
         >
-          <span className={S.buttonName}>Язык: Русский</span>
+          <span className={S.buttonName}>
+            {applyLanguage(['Язык', 'Language'])}: {language}
+          </span>
         </Button>
       </div>
       <div className={S.menu}>

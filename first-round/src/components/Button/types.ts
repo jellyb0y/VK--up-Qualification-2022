@@ -10,6 +10,7 @@ export enum ButtonMode {
   Transparent = 'transparent',
   Primary = 'primary',
   Contrast = 'contrast',
+  Secondary = 'Secondary',
 }
 
 export interface ButtonProps {

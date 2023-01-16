@@ -5,10 +5,13 @@ import DoneIcon from '@assets/images/done_icon.svg';
 import { Context } from '@lib/Themes/context';
 import { getThemeConfig, Registry } from '@lib/Themes/themeRegistry';
 
+import { useLanguages } from '@lib/Languages/useLanguages';
+
+import { Schemes } from '@lib/Themes/types';
+
 import S from './Themes.scss';
 
 import type { FC } from 'react';
-import { Schemes } from '@lib/Themes/types';
 
 const BASIC_THEMES = [
   'brown',
@@ -36,7 +39,6 @@ const SCHEMES = [
 
 const OTHER_THEMES = Object.keys(Registry)
   .reduce((list, themeName) => {
-    console.log(themeName, BASIC_THEMES.includes(themeName), SCHEMES.includes(themeName as Schemes));
     if (BASIC_THEMES.includes(themeName) || SCHEMES.includes(themeName as Schemes)) {
       return list;
     }
@@ -47,6 +49,8 @@ const OTHER_THEMES = Object.keys(Registry)
   }, [...SCHEMES] as string[]);
 
 const Themes: FC = () => {
+  const applyLanguage = useLanguages();
+
   const {
     setScheme,
     setTheme,
@@ -57,7 +61,10 @@ const Themes: FC = () => {
   return (
     <>
       <div className={S.title}>
-        Настройки внешнего вида вашей почты и темы оформления
+        {applyLanguage([
+          'Настройки внешнего вида вашей почты и темы оформления',
+          'Settings for the appearance of your mail and the theme',
+        ])}
       </div>
       <div className={S.themes}>
         {BASIC_THEMES.map((themeName: string) => {

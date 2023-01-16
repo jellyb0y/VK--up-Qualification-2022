@@ -5,14 +5,8 @@ import classnames from 'classnames';
 
 import Button, { ButtonMode, ContentAlign } from '@components/Button';
 import StubComponent from '@components/StubComponent';
+import Settings from '@containers/Settings/Settings';
 
-import IncomingsIcon from '@assets/images/incomings.svg';
-import ImportantIcon from '@assets/images/importants.svg';
-import SentIcon from '@assets/images/sent.svg';
-import DraftsIcon from '@assets/images/drafts.svg';
-import ArchiveIcon from '@assets/images/archive.svg';
-import SpamIcon from '@assets/images/spam.svg';
-import TrashIcon from '@assets/images/trash.svg';
 import PlusIcon from '@assets/images/plus.svg';
 import BurgerIcon from '@assets/images/burger.svg';
 import PancilIcon from '@assets/images/pancil.svg';
@@ -20,48 +14,19 @@ import SettingsIcon from '@assets/images/gear.svg';
 
 import { getFoldersOrder } from './utils/getFoldersOrder';
 import { getFolderUrl } from '@utils/getFolderUrl';
+import { useLanguages } from '@lib/Languages/useLanguages';
+import { getTranslation } from './getTranslation';
 
 import { ScreenType, useScreenObserver } from '@root/hooks/useScreenObserver';
 
 import { ROOT_PATH } from '@app/routes';
+import { DEFAULT_FOLDER, DEFAULT_ICON, DESKTOP_FOLDERS_SORT, FOLDER_ICONS, TABLET_FOLDERS_SORT } from './constants';
 
 import S from './SideMenu.scss';
 
 import type { FC } from 'react';
 import type { State } from '@data/types';
-import type { SideMenuProps, FolderIcons } from './types';
-import Settings from '@containers/Settings/Settings';
-
-const DEFAULT_FOLDER = 'incomings';
-const DEFAULT_ICON = ImportantIcon;
-
-const FOLDER_ICONS: FolderIcons = {
-  'incomings': IncomingsIcon,
-  'sent': SentIcon,
-  'drafts': DraftsIcon,
-  'archive': ArchiveIcon,
-  'spam': SpamIcon,
-  'trash': TrashIcon,
-};
-
-const DESKTOP_FOLDERS_SORT = [
-  'incomings',
-  '*',
-  'sent',
-  'drafts',
-  'archive',
-  'spam',
-  'trash',
-];
-
-const TABLET_FOLDERS_SORT = [
-  'incomings',
-  'sent',
-  'drafts',
-  'archive',
-  'spam',
-  'trash',
-];
+import type { SideMenuProps } from './types';
 
 const mapStateToProps = (state: State) => ({
   folders: state.folders,
@@ -76,6 +41,7 @@ const SideMenu: FC<SideMenuProps> = ({ folders }) => {
 
   const [isLoaded, setLoaded] = useState(false);
   const screenType = useScreenObserver();
+  const applyLanguage = useLanguages();
 
   const foldersSort = screenType !== ScreenType.Tablet ? DESKTOP_FOLDERS_SORT : TABLET_FOLDERS_SORT;
   const foldersIds = folders.ids.length > 0 ? folders.ids : foldersSort;
@@ -103,7 +69,9 @@ const SideMenu: FC<SideMenuProps> = ({ folders }) => {
           className={S.button}
         >
           <PancilIcon className={S.pancilIcon} />
-          <span className={S.buttonName}>Написать письмо</span>
+          <span className={S.buttonName}>
+            {applyLanguage(['Написать письмо', 'Compose'])}
+          </span>
         </Button>
         <div className={S.list}>
           {screenType === ScreenType.Tablet && (
@@ -137,7 +105,9 @@ const SideMenu: FC<SideMenuProps> = ({ folders }) => {
                   <IconComponent className={S.icon}/>
                 </span>
                 {name ? (
-                  <span className={S.buttonName}>{name}</span>
+                  <span className={S.buttonName}>
+                    {applyLanguage([name, getTranslation(name)])}
+                  </span>
                 ) : (
                   <StubComponent
                     className={classnames(S.buttonName, S.buttonNameStub)}
@@ -155,7 +125,9 @@ const SideMenu: FC<SideMenuProps> = ({ folders }) => {
           className={classnames(S.addFolderButton, S.button)}
         >
           <PlusIcon className={S.plusIcon} />
-          <span className={S.buttonName}>Новая папка</span>
+          <span className={S.buttonName}>
+            {applyLanguage(['Новая папка', 'New folder'])}
+          </span>
         </Button>
       </div>
       <Button
@@ -166,7 +138,9 @@ const SideMenu: FC<SideMenuProps> = ({ folders }) => {
         onClick={openSettings}
       >
         <SettingsIcon className={S.settingsIcon} />
-        <span className={S.buttonName}>Настройки</span>
+        <span className={S.buttonName}>
+          {applyLanguage(['Настройки', 'Settings'])}
+        </span>
       </Button>
       {isSettingsOpen && <Settings onClose={closeSettings} />}
     </div>

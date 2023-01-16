@@ -1,6 +1,8 @@
+import { Languages } from '@lib/Languages/types';
+
 const ONE_DAY = 24 * 60 * 60 * 1000;
 
-const MONTHS = [
+const MONTHS_RU = [
   'янв',
   'фев',
   'мар',
@@ -15,7 +17,23 @@ const MONTHS = [
   'дек',
 ];
 
-export const getDate = (dateString: string, full?: boolean): string => {
+const MONTHS_EN = [
+  'jan',
+  'feb',
+  'mar',
+  'apr',
+  'may',
+  'jun',
+  'jul',
+  'aug',
+  'sep',
+  'oct',
+  'nov',
+  'dec',
+];
+
+export const getDate = (dateString: string, full?: boolean, lang = Languages.Ru): string => {
+  const months = lang === Languages.Ru ? MONTHS_RU : MONTHS_EN;
   const date = new Date(dateString);
   const currentDate = new Date();
   const time = date.toTimeString().substring(0, 5);
@@ -34,7 +52,7 @@ export const getDate = (dateString: string, full?: boolean): string => {
   const month = date.getMonth();
   const year = isMoreThanYear ? date.getFullYear() : '';
 
-  const fullDate = `${day} ${MONTHS[month]} ${year}`;
+  const fullDate = `${day} ${months[month]} ${year}`;
 
   if (full) {
     return `${fullDate}, ${time}`;
