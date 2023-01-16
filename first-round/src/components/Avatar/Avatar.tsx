@@ -1,4 +1,5 @@
 import { useMemo } from 'react';
+import classnames from 'classnames';
 
 import S from './Avatar.scss';
 
@@ -12,6 +13,7 @@ const Avatar: FC<AvatarProps> = ({
   userId,
   userName,
   stub,
+  className,
 }) => {
   const { data } = useUserAvatar(userId, stub);
 
@@ -24,7 +26,7 @@ const Avatar: FC<AvatarProps> = ({
   return (
     <div
       style={styles}
-      className={S.root}
+      className={classnames(S.root, className)}
     >
       {stub || !data ? userName[0] : undefined}
     </div>

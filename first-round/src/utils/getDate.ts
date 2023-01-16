@@ -1,39 +1,41 @@
 import { Languages } from '@lib/Languages/types';
 
 const ONE_DAY = 24 * 60 * 60 * 1000;
+const ONE_YEAR = ONE_DAY * 365;
 
 const MONTHS_RU = [
-  'янв',
-  'фев',
-  'мар',
-  'апр',
-  'май',
-  'июн',
-  'июл',
-  'авг',
-  'сен',
-  'окт',
-  'ноя',
-  'дек',
+  ['янв', 'января'],
+  ['фев', 'февраля'],
+  ['мар', 'марта'],
+  ['апр', 'апреля'],
+  ['май', 'мая'],
+  ['июн', 'июня'],
+  ['июл', 'июля'],
+  ['авг', 'августа'],
+  ['сен', 'сентября'],
+  ['окт', 'октября'],
+  ['ноя', 'ноября'],
+  ['дек', 'декабря'],
 ];
 
 const MONTHS_EN = [
-  'jan',
-  'feb',
-  'mar',
-  'apr',
-  'may',
-  'jun',
-  'jul',
-  'aug',
-  'sep',
-  'oct',
-  'nov',
-  'dec',
+  ['Jan', 'January'],
+  ['Feb', 'February'],
+  ['Mar', 'March'],
+  ['Apr', 'April'],
+  ['May', 'May'],
+  ['Jun', 'June'],
+  ['Jul', 'July'],
+  ['Aug', 'August'],
+  ['Sep', 'September'],
+  ['Oct', 'October'],
+  ['Nov', 'November'],
+  ['Dec', 'December'],
 ];
 
 export const getDate = (dateString: string, full?: boolean, lang = Languages.Ru): string => {
   const months = lang === Languages.Ru ? MONTHS_RU : MONTHS_EN;
+
   const date = new Date(dateString);
   const currentDate = new Date();
   const time = date.toTimeString().substring(0, 5);
@@ -52,7 +54,11 @@ export const getDate = (dateString: string, full?: boolean, lang = Languages.Ru)
   const month = date.getMonth();
   const year = isMoreThanYear ? date.getFullYear() : '';
 
-  const fullDate = `${day} ${months[month]} ${year}`;
+  let fullDate = `${day} ${months[month][Number(full)]}`;
+
+  if (currentDate.getTime() - date.getTime() > ONE_YEAR) {
+    fullDate = `${fullDate} ${year}`;
+  }
 
   if (full) {
     return `${fullDate}, ${time}`;

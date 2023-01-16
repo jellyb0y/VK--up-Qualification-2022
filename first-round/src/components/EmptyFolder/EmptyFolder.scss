@@ -1,0 +1,29 @@
+.root {
+  flex-grow: 1;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 28px;
+  color: var(--primaryContrastTextColor);
+}
+
+.center {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.image {
+  height: var(--emptyFolderImageHeight);
+  width: 100%;
+  background-size: contain;
+  background-image: var(--emptyFolderImage);
+  background-repeat: no-repeat;
+  background-position: center;
+  margin-bottom: 20px;
+}

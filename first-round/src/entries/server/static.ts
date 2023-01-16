@@ -11,6 +11,9 @@ const CONTENT_TYPES = {
   '.js': 'application/javascript',
   '.css': 'text/css',
   '.json': 'application/json',
+  '.png': 'image/png',
+  '.jpg': 'image/jpg',
+  '.jpeg': 'image/jpeg',
   '.svg': 'image/svg+xml',
 };
 

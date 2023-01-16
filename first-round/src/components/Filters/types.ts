@@ -8,4 +8,6 @@ export interface FiltersProps {
   toogleBookmarkFilter: () => void;
   toogleReadFilter: () => void;
   toogleAttachmentsFilter: () => void;
+  toogleNewestSort: () => void;
+  toogleOldestSort: () => void;
 }

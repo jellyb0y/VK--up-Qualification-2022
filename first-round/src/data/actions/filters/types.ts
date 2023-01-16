@@ -9,6 +9,10 @@ export type ToogleAttachmentsFilterAction = BaseAction<'TOOGLE_ATTACHMENTS_FILTE
 
 export type ToogleReadFilterAction = BaseAction<'TOOGLE_READ_FILTER'>;
 
+export type ToogleNewestSortAction = BaseAction<'TOOGLE_NEWEST_SORT'>;
+
+export type ToogleOldestSortAction = BaseAction<'TOOGLE_OLDEST_SORT'>;
+
 export interface UpdateFiltersAction extends BaseAction<'UPDATE_FILERS'> {
   filters: Partial<FiltersState>;
 }
@@ -18,4 +22,6 @@ export type ActionTypes =
   | ToogleBookmarkFilterAction
   | ToogleAttachmentsFilterAction
   | ToogleReadFilterAction
+  | ToogleNewestSortAction
+  | ToogleOldestSortAction
   | UpdateFiltersAction;

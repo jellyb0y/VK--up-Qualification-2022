@@ -23,6 +23,7 @@ export const normalizeLetters = (data: DenormalizedData) => {
       important: letterImportant,
       read: letterRead,
       doc: letterDoc,
+      flag: letterFlag,
       ...unusedParams
     } = letter;
 
@@ -72,6 +73,7 @@ export const normalizeLetters = (data: DenormalizedData) => {
       important: letterImportant,
       read: letterRead,
       folder: folder.id,
+      category: letterFlag,
       date: letterDate,
       type: 'full',
       hasDoc: Boolean(letterDoc),

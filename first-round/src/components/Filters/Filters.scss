@@ -46,6 +46,12 @@
   height: 20px;
 }
 
+.separator {
+  width: 100%;
+  margin-bottom: -1px;
+  border-top: 1px solid var(--separatorColor);
+}
+
 @keyframes fade-in-up {
   from {
     opacity: 0;

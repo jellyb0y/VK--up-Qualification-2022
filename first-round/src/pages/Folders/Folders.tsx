@@ -2,8 +2,10 @@ import { connect } from 'react-redux';
 
 import LetterComponent from '@components/LetterShortCut';
 import FoldersListStub from '@components/FoldersListStub';
+import EmptyFolder from '@components/EmptyFolder';
 
 import { applyFilters } from './applyFilters';
+import { applySort } from './applySort';
 
 import S from './Folders.scss';
 
@@ -24,12 +26,13 @@ const mapStateToProps = (state: State) => {
 
   const filters = state.filters;
   const filteredLetters = applyFilters(filters, letters);
+  const sortedLetters = applySort(filters.sortType, filteredLetters);
 
   return {
     hasError: state.folders.hasError,
     isLoading: state.folders.isLoading,
     activeFolder,
-    letters: filteredLetters,
+    letters: sortedLetters,
     users: state.users.entities,
   };
 };
@@ -39,20 +42,16 @@ const Folders: FC<FoldersProps> = ({
   letters,
   users,
   hasError,
+  isLoading,
 }) => {
-  const sortedLetters = letters.sort(({ date: dateA }, { date: dateB }) => (
-    new Date(dateB).getTime() - new Date(dateA).getTime()
-  ));
-
-  const isListReady = (
-    sortedLetters.length &&
-    !hasError
-  );
+  if (!isLoading && (hasError || !letters.length)) {
+    return <EmptyFolder />;
+  }
 
   return (
     <div className={S.root}>
-      {isListReady ? (
-        sortedLetters.map((letter) => (
+      {!isLoading || letters.length ? (
+        letters.map((letter) => (
           <LetterComponent
             key={letter.id}
             authorUser={users[letter.author]}

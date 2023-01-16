@@ -3,3 +3,5 @@ export const AVAILABLE_FILTES = {
   'read_filter': 'readFilter',
   'bookmark_filter': 'bookmarkFilter',
 };
+
+export const SORT_TYPE_CGI = 'sort_type';

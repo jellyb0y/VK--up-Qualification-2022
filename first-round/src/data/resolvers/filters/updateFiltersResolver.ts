@@ -1,4 +1,4 @@
-import { AVAILABLE_FILTES } from '@data/reducers/filters/constants';
+import { AVAILABLE_FILTES, SORT_TYPE_CGI } from '@data/reducers/filters/constants';
 import { State } from '@data/types';
 
 import type { BaseAction } from '@data/types/actions';
@@ -19,6 +19,8 @@ export const updateFiltersResolver = (action: () => BaseAction<any>) => {
         urlParams.delete(key)
       }
     });
+
+    urlParams.set(SORT_TYPE_CGI, filters.sortType);
 
     const newUrl = window.location.protocol + '//' + window.location.host + window.location.pathname + '?' + urlParams.toString();
     window.history.pushState({ path: newUrl }, '', newUrl);

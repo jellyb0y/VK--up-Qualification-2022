@@ -39,6 +39,7 @@ $settingHeight: 400px;
 }
 
 .menu {
+  overflow: auto;
   flex-grow: 1;
   padding: 26px 46px 26px 26px;
 }

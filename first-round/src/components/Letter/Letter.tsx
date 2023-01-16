@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 
 import Avatar from '@components/Avatar';
 import StubComponent from '@components/StubComponent';
+import ImportantIcon from '@assets/images/important.svg';
 
 import { getDate } from '@utils/getDate';
 import { declination } from '@utils/declination';
@@ -16,6 +17,7 @@ import type { FC } from 'react';
 import type { LetterProps } from './types';
 import type { ActionCreator } from '@reduxjs/toolkit';
 import type { ThunkActionDispatch } from 'redux-thunk';
+import Category from '@components/Category';
 
 const MAX_RECEIPIENTS_COUNT = 3;
 
@@ -34,6 +36,8 @@ const Letter: FC<LetterProps> = ({
     read,
     doc,
     to,
+    important,
+    category,
   },
   users,
   loadDoc,
@@ -71,6 +75,7 @@ const Letter: FC<LetterProps> = ({
     <div className={S.root}>
       <div className={S.title}>
         {title}
+        {category && <Category category={category} withName />}
       </div>
       <div className={S.head}>
         {!read && <div className={S.readMark} />}
@@ -79,6 +84,7 @@ const Letter: FC<LetterProps> = ({
           <div className={S.headMain}>
             {authorName}
             <span className={S.date}>{getDate(date, true, lang)}</span>
+            {important && <ImportantIcon className={S.importantIcon} />}
           </div>
           <div className={S.recepients}>
             {applyLanguage(['Кому:', 'To:'])}

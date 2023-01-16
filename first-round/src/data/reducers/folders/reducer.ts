@@ -4,7 +4,7 @@ import type { ActionTypes } from '@root/data/actions/folders/types';
 import type { FoldersState } from './types';
 
 export const getInitialState = (): FoldersState => ({
-  isLoading: false,
+  isLoading: true,
   hasError: false,
   activeFolder: null,
   entities: {},

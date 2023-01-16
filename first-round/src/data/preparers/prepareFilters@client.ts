@@ -1,6 +1,6 @@
 import { updateFiltersAction } from '@data/actions/filters';
-import { FiltersState } from '@data/reducers/filters';
-import { AVAILABLE_FILTES } from '@data/reducers/filters/constants';
+import { FiltersState, SortType } from '@data/reducers/filters';
+import { AVAILABLE_FILTES, SORT_TYPE_CGI } from '@data/reducers/filters/constants';
 import { createPreparer } from '@lib/DataPreparer/createPreparer';
 
 import { Side } from '@lib/DataPreparer/types';
@@ -13,6 +13,11 @@ export const prepareFiltersClient = createPreparer((dispatch) => {
     const paramValue = urlParams.get(key);
     filters[filtersKey] = !!paramValue;
   });
+
+  const sortType = urlParams.get(SORT_TYPE_CGI);
+  if (sortType) {
+    filters.sortType = sortType as SortType;
+  }
 
   dispatch(updateFiltersAction(filters));
 }, {

@@ -32,6 +32,7 @@
     --separatorColor: rgba(0, 16, 61, 0.12);
     --separatorContrastColor: rgba(0, 16, 61, 0.12);
     --activeContrastButtonBgColor: rgba(0, 16, 61, 0.08);
+    --checkboxBorderColor: rgba(0, 16, 61, 0.12);
 
     --greyColor: #A5A7AD;
     --blueColor: #005FF9;
@@ -45,6 +46,9 @@
     --primaryTextColor: #2c2d2e;
     --secondaryTextColor: rgba(44, 45, 46, 0.48);
     --lightTextColor: #87898F;
+
+    --emptyFolderImage: url(../images/empty_folder_light.png);
+    --emptyFolderImageHeight: 180px;
   }
 }
 
@@ -62,6 +66,7 @@
     --separatorColor: rgba(0, 0, 0, 0.4);
     --separatorContrastColor: rgba(0, 0, 0, 0.4);
     --activeContrastButtonBgColor: rgba(255, 255, 255, 0.24);
+    --checkboxBorderColor: rgba(255, 255, 255, 0.16);
 
     --greyColor: #9C9DA2;
     --blueColor: #3C82FD;
@@ -75,5 +80,8 @@
     --primaryTextColor: #E7E8EA;
     --secondaryTextColor: rgba(231, 232, 234, 0.48);
     --lightTextColor: #8C8E94;
+
+    --emptyFolderImage: url(../images/empty_folder_dark.png);
+    --emptyFolderImageHeight: 180px;
   }
 }

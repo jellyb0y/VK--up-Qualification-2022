@@ -65,6 +65,7 @@ export type Letter = {
   date: string;
   type: 'full';
   hasDoc: boolean;
+  category?: string;
   doc?: {
     img: string[];
   }
@@ -86,6 +87,7 @@ export type DenormalizedData = {
   important: boolean;
   read: boolean;
   date: string;
+  flag: string;
   folder?: string;
   doc?: {
     img: string | string[];

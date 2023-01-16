@@ -13,8 +13,12 @@ import {
   resetFiltersAction,
   toogleAttachmentsFilterAction,
   toogleBookmarkFilterAction,
+  toogleNewestSortAction,
+  toogleOldestSortAction,
   toogleReadFilterAction,
 } from '@data/actions/filters';
+
+import { SortType } from '@data/reducers/filters';
 
 import S from './Filters.scss';
 
@@ -29,6 +33,8 @@ const mapDispatchToProps = (dispatch: ThunkActionDispatch<ActionCreator<any>>) =
   toogleBookmarkFilter: () => dispatch(updateFiltersResolver(toogleBookmarkFilterAction)),
   toogleReadFilter: () => dispatch(updateFiltersResolver(toogleReadFilterAction)),
   toogleAttachmentsFilter: () => dispatch(updateFiltersResolver(toogleAttachmentsFilterAction)),
+  toogleNewestSort: () => dispatch(updateFiltersResolver(toogleNewestSortAction)),
+  toogleOldestSort: () => dispatch(updateFiltersResolver(toogleOldestSortAction)),
 });
 
 const mapStateToProps = (state: State) => ({
@@ -43,6 +49,8 @@ const Filters: FC<FiltersProps> = ({
   toogleAttachmentsFilter,
   toogleBookmarkFilter,
   toogleReadFilter,
+  toogleNewestSort,
+  toogleOldestSort,
 }) => {
   const containerRef = useRef<HTMLDivElement>();
   const applyLanguage = useLanguages();
@@ -50,7 +58,6 @@ const Filters: FC<FiltersProps> = ({
   const handleClick = useCallback((event: Event) => {
     const target = event.target as HTMLElement;
     if (!containerRef.current.contains(target)) {
-      event.stopPropagation();
       onClose?.();
     }
   }, []);
@@ -118,6 +125,19 @@ const Filters: FC<FiltersProps> = ({
           <AttachIcon className={S.attachIcon} />
         </div>
         {applyLanguage(['С вложениями', 'With attachments'])}
+      </FilterItem>
+      <div className={S.separator} />
+      <FilterItem
+        onClick={createToogleHandler(toogleNewestSort)}
+        isSelected={filters.sortType === SortType.NewestFirst}
+      >
+        {applyLanguage(['Сначала новые', 'Newest on top'])}
+      </FilterItem>
+      <FilterItem
+        onClick={createToogleHandler(toogleOldestSort)}
+        isSelected={filters.sortType === SortType.OldestFirst}
+      >
+        {applyLanguage(['Сначала старые', 'Oldest on top'])}
       </FilterItem>
     </div>
   );

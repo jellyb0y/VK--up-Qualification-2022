@@ -1,7 +1,6 @@
 import DarkPreviewImage from './assets/dark_preview.module.jpg';
 import LightPreviewImage from './assets/light_preview.module.jpg';
 import AnimePreviewImage from './assets/anime_preview.module.png';
-import YandexOfficePreviewImage from './assets/yandex_office_preview.module.jpg';
 
 import { registerTheme } from '@lib/Themes/themeRegistry';
 import { Schemes } from '@lib/Themes/types';
@@ -30,4 +29,3 @@ registerTheme(Schemes.Light, { scheme: Schemes.Light, color: '#F0F0F0', image: L
 
 // Дополнительные темы
 registerTheme('anime', { scheme: Schemes.Dark, color: '#6B1344', image: AnimePreviewImage });
-registerTheme('yandex_office', { scheme: Schemes.Dark, color: '#F0F0F0', image: YandexOfficePreviewImage });
