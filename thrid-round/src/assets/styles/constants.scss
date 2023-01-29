@@ -1,0 +1,31 @@
+$tabletWidth: 768px;
+
+@mixin useMediaTablet {
+  @media (max-width: $tabletWidth) {
+    @content;
+  }
+}
+
+@mixin useLightScheme {
+  body[scheme="system"] {
+    @media (prefers-color-scheme: light) {
+      @content;
+    }
+  }
+
+  body[scheme="light"] {
+    @content;
+  }
+}
+
+@mixin useDarkScheme {
+  body[scheme="system"] {
+    @media (prefers-color-scheme: dark) {
+      @content;
+    }
+  }
+
+  body[scheme="dark"] {
+    @content;
+  }
+}

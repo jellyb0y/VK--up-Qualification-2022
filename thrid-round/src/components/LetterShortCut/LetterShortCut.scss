@@ -1,0 +1,235 @@
+@import '@assets/styles/constants.scss';
+
+.root {
+  display: flex;
+  align-items: center;
+  height: 48px;
+
+  padding: 0 12px 0 28px;
+  border-radius: 12px;
+
+  position: relative;
+  transition: background-color 0.1s ease-in;
+  cursor: pointer;
+
+  &:hover {
+    background-color: var(--primaryHoverBgColor);
+
+    &:after {
+      display: none;
+    }
+
+    .avatar {
+      animation: fade-out .1s ease-out;
+      animation-fill-mode: forwards;
+    }
+
+    .checkbox {
+      animation: fade-in .2s ease-in;
+      animation-fill-mode: forwards;
+    }
+
+    .bookmark {
+      visibility: visible;
+    }
+
+    .readMark {
+      visibility: visible;
+    }
+
+    + .root::after {
+      display: none;
+    }
+  }
+
+  &:first-child .root::after {
+    display: none;
+  }
+
+  &::after {
+    content: '';
+    position: absolute;
+    top: -1px;
+    width: calc(100% - 71px - 12px);
+    left: 71px;
+    height: 1px;
+    background-color: var(--separatorColor);
+  }
+}
+
+.avatarContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+
+  flex-shrink: 0;
+  width: 32px;
+  height: 32px;
+}
+
+.avatar {
+  position: absolute;
+  z-index: 1;
+}
+
+.checkbox {
+  outline: none;
+  border: 1px solid var(--checkboxBorderColor);
+  background-color: var(--primaryBgColor);
+  border-radius: 4px;
+  width: 16px;
+  height: 16px;
+
+  position: absolute;
+  opacity: 0;
+}
+
+.readMark {
+  visibility: hidden;
+
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+
+  background-color: var(--greyColor);
+
+  position: absolute;
+  top: calc(50% - 3px);
+  left: 11px;
+}
+
+.readMarkSelected {
+  visibility: visible;
+  background-color: var(--blueColor);
+} 
+
+.content {
+  display: flex;
+  flex-grow: 1;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+
+  margin-left: 12px;
+
+  height: 100%;
+}
+
+.author {
+  width: 136px;
+  flex-shrink: 0;
+
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 20px;
+}
+
+.text {
+  flex-shrink: 1;
+  flex-grow: 1;
+
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 20px;
+
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  margin-left: 8px;
+}
+
+.shortText {
+  color: var(--lightTextColor);
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 20px;
+  margin-left: 8px;
+}
+
+.categories {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  margin-left: 16px; 
+}
+
+.attachIcon {
+  fill: var(--primaryTextColor);
+}
+
+.categoryIcon + .attachIcon {
+  margin-left: 6px;
+}
+
+.date {
+  min-width: 44px;
+  text-align: right;
+  flex-shrink: 0;
+  white-space: nowrap;
+  margin-left: 14px;
+  font-weight: 400;
+  font-size: 13px;
+  line-height: 20px;
+  color: var(--lightTextColor);
+}
+
+.notRead {
+  .author {
+    font-weight: 700;
+  }
+
+  .title {
+    font-weight: 700;
+  }
+}
+
+.bookmark {
+  visibility: hidden;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+
+  margin-left: 12px;
+  height: 100%;
+  width: 48px;
+
+  path {
+    fill: var(--greyColor);
+  }
+}
+
+.selectedBookmark path {
+  visibility: visible;
+  fill: var(--redColor);
+}
+
+@keyframes fade-in {
+  from {
+    transform: scale(0.5);
+    opacity: 0;
+  }
+
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes fade-out {
+  from {
+    transform: scale(1);
+    opacity: 1;
+  }
+
+  to {
+    transform: scale(0.5);
+    opacity: 0;
+  }
+}

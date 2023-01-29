@@ -1,0 +1,60 @@
+.title {
+  font-size: 15px;
+  line-height: 20px;
+  margin-bottom: 20px;
+}
+
+.language {
+  position: relative;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+
+  + .language {
+    margin-top: 20px;
+  }
+
+  &::after {
+    content: '';
+    position: absolute;
+    top: -10px;
+    left: -10px;
+    width: 100%;
+    height: 100%;
+    padding: 10px;
+    box-sizing: content-box;
+  }
+}
+
+.flag,
+.point {
+  margin-right: 12px;
+}
+
+.point {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 1px solid var(--greyColor);
+
+  &::after {
+    content: '';
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background-color: var(--popupBgColor);
+  }
+}
+
+.selected .point {
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  background-color: var(--blueColor);
+}
+
+.button {
+  margin-top: 32px;
+}

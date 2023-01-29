@@ -1,0 +1,20 @@
+.root {
+  height: calc(100% + 24px);
+  margin: -12px -12px -12px 0;
+}
+
+.scroll {
+  height: 100%;
+  padding: 12px 12px 12px 0;
+  overflow-y: auto;
+}
+
+.list {
+  flex-grow: 1;
+  flex-shrink: 1;
+
+  height: fit-content;
+  background-color: var(--primaryBgColor);
+  border-radius: 12px;
+  overflow: hidden;
+}

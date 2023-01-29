@@ -1,0 +1,101 @@
+@import '@assets/styles/constants.scss';
+
+.root {
+  display: flex;
+  align-items: center;
+  height: 36px;
+  padding: 0 12px;
+  border-radius: 8px;
+  transition: background-color 0.1s ease-in;
+  cursor: pointer;
+  box-sizing: content-box;
+  width: fit-content;
+  user-select: none;
+  position: relative;
+
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 20px;
+
+  &.selected,
+  &:hover {
+    background-color: var(--activeButtonBgColor);
+  }
+}
+
+.link {
+  &:after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+  }
+}
+
+.primary {
+  border: 1px solid rgba(0, 16, 61, 0.12);
+  background-color: var(--primaryButtonBgColor);
+  color: #333333;
+  font-weight: 700;
+  transition: filter .1s ease-in;
+  filter: brightness(100%);
+
+  @include useDarkScheme {
+    border: 1px solid rgba(0, 0, 0, 0.4);
+  }
+
+  &.selected,
+  &:hover {
+    filter: brightness(95%);
+    background-color: var(--primaryButtonBgColor);
+  }
+
+  &:active {
+    filter: brightness(90%); 
+  }
+}
+
+.secondary {
+  overflow: hidden;
+  position: relative;
+  background-color: var(--blueColor);
+  color: #FFFFFF;
+  transition: filter .1s ease-in;
+
+  &:hover {
+    background-color: var(--blueColor);
+    filter: saturate(120%);
+  }
+
+  &.selected,
+  &:active {
+    filter: brightness(90%);
+  }
+}
+
+.contrast {
+  &.selected,
+  &:hover {
+    background-color: var(--activeContrastButtonBgColor);
+  }
+}
+
+.contentAlign {
+  &_left {
+    justify-content: flex-start;
+  }
+
+  &_center {
+    justify-content: center;
+  }
+
+  &_right {
+    justify-content: flex-end;
+  }
+}
+
+.stretch {
+  width: unset;
+}

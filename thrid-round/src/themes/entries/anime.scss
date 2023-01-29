@@ -1,0 +1,38 @@
+:root {
+  body[scheme][theme="anime"] {
+    background:
+      linear-gradient(180deg, rgba(117, 0, 69, 0.64) 0%, rgba(0, 9, 83, 0.64) 100%),
+      url(../assets/anime_bg.jpg), #FFFFFF;
+
+    --emptyFolderImage: url(../assets/empty_folder_anime.png);
+    --emptyFolderImageHeight: 100px;
+
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+
+    --bgColor: #FFFFFF;
+    --primaryBgColor: #FFFFFF;
+    --primaryHoverBgColor: rgba(0, 16, 61, 0.04);
+    --popupBgColor: #FFFFFF;
+    --popupHoverBgColor: #F5F5F7;
+    --headerBgColor: #6B1344;
+    --separatorColor: rgba(0, 16, 61, 0.12);
+    --separatorContrastColor: rgba(0, 16, 61, 0.12);
+    --activeContrastButtonBgColor: rgba(152, 152, 152, 0.26);
+    --stubBgColor: #E9EAEC;
+    --checkboxBorderColor: rgba(0, 16, 61, 0.12);
+
+    --greyColor: #A5A7AD;
+    --blueColor: #005FF9;
+    --redColor: #FC2C38;
+
+    --primaryContrastTextColor: #E7E8EA;
+    --secondaryContrastTextColor: rgba(231, 232, 234, 0.48);
+    --lightContrastTextColor: #8C8E94;
+
+    --primaryTextColor: #2c2d2e;
+    --secondaryTextColor: rgba(44, 45, 46, 0.48);
+    --lightTextColor: #87898F;
+  }
+}

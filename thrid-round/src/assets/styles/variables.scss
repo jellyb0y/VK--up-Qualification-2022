@@ -1,0 +1,87 @@
+@mixin bodyWithLightScheme {
+  @media (prefers-color-scheme: light) {
+    @content;
+  }
+
+  body[scheme="light"] {
+    @content;
+  }
+}
+
+@mixin bodyWithDarkScheme {
+  @media (prefers-color-scheme: dark) {
+    @content;
+  }
+
+  body[scheme="dark"] {
+    @content;
+  }
+}
+
+:root {
+  @include bodyWithLightScheme {
+    --bgColor: #F6F7F8;
+    --primaryBgColor: #FFFFFF;
+    --primaryHoverBgColor: rgba(0, 16, 61, 0.04);
+    --headerBgColor: #FFFFFF;
+    --primaryButtonBgColor: #FFFFFF;
+    --activeButtonBgColor: rgba(0, 16, 61, 0.08);
+    --stubBgColor: #E9EAEC;
+    --popupBgColor: #FFFFFF;
+    --popupHoverBgColor: #F5F5F7;
+    --separatorColor: rgba(0, 16, 61, 0.12);
+    --separatorContrastColor: rgba(0, 16, 61, 0.12);
+    --activeContrastButtonBgColor: rgba(0, 16, 61, 0.08);
+    --checkboxBorderColor: rgba(0, 16, 61, 0.12);
+
+    --greyColor: #A5A7AD;
+    --blueColor: #005FF9;
+    --redColor: #FC2C38;
+
+    --primaryHeaderTextColor: #2c2d2e;
+    --primaryContrastTextColor: #2c2d2e;
+    --secondaryContrastTextColor: rgba(44, 45, 46, 0.48);
+    --lightContrastTextColor: #87898F;
+
+    --primaryTextColor: #2c2d2e;
+    --secondaryTextColor: rgba(44, 45, 46, 0.48);
+    --lightTextColor: #87898F;
+
+    --emptyFolderImage: url(../images/empty_folder_light.png);
+    --emptyFolderImageHeight: 180px;
+  }
+}
+
+:root {
+  @include bodyWithDarkScheme {
+    --bgColor: #19191A;
+    --primaryBgColor: #232324;
+    --primaryHoverBgColor: rgba(255, 255, 255, 0.04);
+    --headerBgColor: #232324;
+    --primaryButtonBgColor: #FFFFFF;
+    --activeButtonBgColor: rgba(255, 255, 255, 0.24);
+    --stubBgColor: #ffffff29;
+    --popupBgColor: #303030;
+    --popupHoverBgColor: #383838;
+    --separatorColor: rgba(0, 0, 0, 0.4);
+    --separatorContrastColor: rgba(0, 0, 0, 0.4);
+    --activeContrastButtonBgColor: rgba(255, 255, 255, 0.24);
+    --checkboxBorderColor: rgba(255, 255, 255, 0.16);
+
+    --greyColor: #9C9DA2;
+    --blueColor: #3C82FD;
+    --redColor: #FF4550;
+
+    --primaryHeaderTextColor: #E7E8EA;
+    --primaryContrastTextColor: #E7E8EA;
+    --secondaryContrastTextColor: rgba(231, 232, 234, 0.48);
+    --lightContrastTextColor: #8C8E94;
+
+    --primaryTextColor: #E7E8EA;
+    --secondaryTextColor: rgba(231, 232, 234, 0.48);
+    --lightTextColor: #8C8E94;
+
+    --emptyFolderImage: url(../images/empty_folder_dark.png);
+    --emptyFolderImageHeight: 180px;
+  }
+}

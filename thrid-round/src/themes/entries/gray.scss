@@ -1,0 +1,29 @@
+:root {
+  body[scheme][theme="gray"] {
+    --bgColor: #424242;
+    --primaryBgColor: #FFFFFF;
+    --primaryHoverBgColor: rgba(0, 16, 61, 0.04);
+    --popupBgColor: #FFFFFF;
+    --popupHoverBgColor: #F5F5F7;
+    --headerBgColor: #242424;
+    --separatorColor: rgba(0, 16, 61, 0.12);
+    --separatorContrastColor: rgba(0, 16, 61, 0.12);
+    --activeContrastButtonBgColor: rgba(0, 16, 61, 0.08);
+    --stubBgColor: #E9EAEC;
+    --checkboxBorderColor: rgba(0, 16, 61, 0.12);
+
+    --greyColor: #A5A7AD;
+    --blueColor: #005FF9;
+    --redColor: #FC2C38;
+
+    --primaryContrastTextColor: #E7E8EA;
+    --secondaryContrastTextColor: rgba(231, 232, 234, 0.48);
+    --lightContrastTextColor: #8C8E94;
+
+    --primaryTextColor: #2c2d2e;
+    --secondaryTextColor: rgba(44, 45, 46, 0.48);
+    --lightTextColor: #87898F;
+
+    --emptyFolderImage: url(../../assets/images/empty_folder_light.png);
+  }
+}

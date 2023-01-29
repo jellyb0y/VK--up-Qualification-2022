@@ -1,0 +1,7 @@
+export const RESET_FILTERS = '@filters/RESET_FILTERS';
+export const TOOGLE_BOOKMARK_FILTER = '@filters/TOOGLE_BOOKMARK_FILTER';
+export const TOOGLE_ATTACHMENTS_FILTER = '@filters/TOOGLE_ATTACHMENTS_FILTER';
+export const TOOGLE_READ_FILTER = '@filters/TOOGLE_READ_FILTER';
+export const TOOGLE_NEWEST_SORT = '@filters/TOOGLE_NEWEST_SORT';
+export const TOOGLE_OLDEST_SORT = '@filters/TOOGLE_OLDEST_SORT';
+export const UPDATE_FILERS = '@filters/UPDATE_FILERS';

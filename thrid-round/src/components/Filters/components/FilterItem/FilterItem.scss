@@ -1,0 +1,28 @@
+.root {
+  display: flex;
+  align-items: center;
+  height: 36px;
+  padding-left: 25px;
+  padding-right: 40px;
+  transition-duration: .1s;
+  cursor: pointer;
+  font-size: 15px;
+  position: relative;
+  margin-top: 1px;
+
+  &:first-child {
+    margin-top: 0;
+  }
+
+  &:hover {
+    background-color: var(--popupHoverBgColor);
+  }
+}
+
+.checkIcon {
+  position: absolute;
+  left: 7px;
+  width: 10px;
+  height: 7px;
+  fill: var(--primaryTextColor);
+}

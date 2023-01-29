@@ -1,0 +1,57 @@
+@import '@assets/styles/constants.scss';
+
+.root {
+  height: fit-content;
+  flex-grow: 1;
+  padding: 16px 24px 32px 32px;
+  border-radius: 12px;
+  background-color: var(--primaryBgColor);
+}
+
+.title {
+  width: 100%;
+  height: 32px;
+  border-radius: 12px;
+}
+
+.head {
+  display: flex;
+  align-items: center;
+  margin-top: 24px;
+}
+
+.avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  margin-right: 12px;
+}
+
+.headContent {
+  flex-grow: 1;
+  border-radius: 12px;
+  height: 42px;
+}
+
+.content {
+  height: 200px;
+  border-radius: 12px;
+  margin-top: 28px;
+}
+
+.attach {
+  margin-top: 20px;
+}
+
+.photo {
+  border-radius: 12px;
+  height: 190px;
+  max-width: 300px;
+}
+
+.photoMeta {
+  height: 14px;
+  max-width: 200px;
+  margin-top: 15px;
+  border-radius: 7px;
+}

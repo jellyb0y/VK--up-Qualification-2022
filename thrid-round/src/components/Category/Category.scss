@@ -1,0 +1,22 @@
+.root {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.icon {
+  width: 20px;
+  height: 20px;
+
+  + .name {
+    margin-left: 8px;
+  }
+}
+
+.name {
+  white-space: nowrap;
+  color: var(--primaryTextColor);
+  font-weight: 400;
+  font-size: 13px;
+  line-height: 20px;
+}

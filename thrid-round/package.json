@@ -1,0 +1,111 @@
+{
+  "scripts": {
+    "cp:database": "cp ./resourses/db.json ./dist/db.json",
+    "clean": "(rm -r ./dist && mkdir ./dist && touch ./dist/.gitkeep && echo 'clean successfuly') || echo 'nothing to clean'",
+    "build:client:dev": "NODE_ENV=production webpack-cli --config ./webpack/webpack.client.js --watch",
+    "build:server:dev": "NODE_ENV=production webpack-cli --config ./webpack/webpack.server.js --watch",
+    "build:prerender:dev": "NODE_ENV=production webpack-cli --config ./webpack/webpack.prerenderer.js --watch",
+    "build:client:prod": "MODE=production webpack-cli --config ./webpack/webpack.client.js",
+    "build:server:prod": "MODE=production webpack-cli --config ./webpack/webpack.server.js",
+    "build:prerender:prod": "MODE=production webpack-cli --config ./webpack/webpack.prerenderer.js",
+    "build:all:dev": "npm run cp:database && npm-run-all -p build:client:dev build:server:dev build:prerender:dev",
+    "build:all:prod": "npm run clean && npm run cp:database && npm run build:client:prod && npm run build:server:prod && npm run build:prerender:prod",
+    "prerender": "node ./dist/prerenderer.js",
+    "prerender:dev": "nodemon ./dist/prerenderer.js",
+    "server": "node ./dist/server.js",
+    "server:dev": "nodemon ./dist/server.js --enable-source-maps",
+    "dev": "npm run build:all:prod && npm-run-all -p build:all:dev prerender:dev server:dev",
+    "prod": "npm run build:all:prod && npm run prerender && npm run server",
+    "bundle-analyzer:client": "BUNDLE_ANALYZE=1 npm run build:client:prod",
+    "bundle-analyzer:server": "BUNDLE_ANALYZE=1 npm run build:server:prod",
+    "lint": "lint-staged"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:jellyb0y/VK-Cup-Qualification-2022.git"
+  },
+  "author": "jellyb0y<kise@internet.ru>",
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run lint"
+    }
+  },
+  "lint-staged": {
+    "*.ts": [
+      "eslint ./"
+    ],
+    ".scss": [
+      "sass-lint --verbose"
+    ]
+  },
+  "dependencies": {
+    "@reduxjs/toolkit": "^1.9.1",
+    "axios": "^1.2.2",
+    "classnames": "^2.3.1",
+    "js-cookie": "^3.0.1",
+    "lodash": "^4.17.21",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "react-helmet": "^6.1.0",
+    "react-redux": "^7.2.6",
+    "react-router": "^6.2.1",
+    "react-router-dom": "^6.2.1",
+    "redux-thunk": "^2.4.1",
+    "used-styles": "^2.4.1"
+  },
+  "devDependencies": {
+    "@babel/preset-env": "^7.20.2",
+    "@svgr/webpack": "^6.3.1",
+    "@types/js-cookie": "^3.0.2",
+    "@types/lodash": "^4.14.191",
+    "@types/react": "^17.0.39",
+    "@types/react-dom": "^17.0.11",
+    "@types/react-helmet": "^6.1.6",
+    "@typescript-eslint/eslint-plugin": "^5.10.2",
+    "@typescript-eslint/parser": "^5.10.2",
+    "ajv": "^7.2.4",
+    "babel-core": "^6.26.3",
+    "babel-loader": "^9.1.2",
+    "babel-preset-es2015": "^6.24.1",
+    "css-loader": "^6.6.0",
+    "eslint": "^8.8.0",
+    "eslint-config-airbnb": "^19.0.4",
+    "eslint-config-react-app": "^7.0.0",
+    "eslint-plugin-import": "^2.25.4",
+    "eslint-plugin-jsx-a11y": "^6.5.1",
+    "eslint-plugin-react": "^7.28.0",
+    "eslint-plugin-react-hooks": "^4.3.0",
+    "fast-glob": "^3.2.12",
+    "favicons": "^6.2.2",
+    "favicons-webpack-plugin": "^5.0.2",
+    "file-loader": "^6.2.0",
+    "html-webpack-plugin": "^5.5.0",
+    "husky": "^7.0.4",
+    "lint-staged": "^12.3.3",
+    "mini-css-extract-plugin": "^2.5.3",
+    "node-sass": "^7.0.3",
+    "nodemon": "^2.0.19",
+    "npm": "^8.18.0",
+    "npm-run-all": "^4.1.5",
+    "null-loader": "^4.0.1",
+    "path-browserify": "^1.0.1",
+    "postcss-inline-base64": "^7.2.2",
+    "postcss-loader": "^7.0.1",
+    "postcss-normalize": "^10.0.1",
+    "prettier": "^2.5.1",
+    "sass": "^1.56.1",
+    "sass-lint": "^1.13.1",
+    "sass-loader": "^12.4.0",
+    "style-loader": "^3.3.1",
+    "ts-loader": "^9.2.6",
+    "tsconfig-paths": "^3.12.0",
+    "tsconfig-paths-webpack-plugin": "^3.5.2",
+    "typescript": "^4.5.5",
+    "url-loader": "^4.1.1",
+    "webpack": "^5.68.0",
+    "webpack-bundle-analyzer": "^4.7.0",
+    "webpack-cli": "^4.9.2",
+    "webpack-dev-server": "^4.7.4",
+    "webpack-merge": "^5.8.0"
+  }
+}
