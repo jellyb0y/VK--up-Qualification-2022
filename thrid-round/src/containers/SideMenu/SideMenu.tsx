@@ -6,6 +6,7 @@ import classnames from 'classnames';
 import Button, { ButtonMode, ContentAlign } from '@components/Button';
 import StubComponent from '@components/StubComponent';
 import Settings from '@containers/Settings/Settings';
+import LetterCompose from '@containers/LetterCompose';
 
 import PlusIcon from '@assets/images/plus.svg';
 import BurgerIcon from '@assets/images/burger.svg';
@@ -34,6 +35,7 @@ const mapStateToProps = (state: State) => ({
 
 const SideMenu: FC<SideMenuProps> = ({ folders }) => {
   const [isSettingsOpen, setSettingsOpen] = useState(false);
+  const [isComposeOpen, setComposeOpen] = useState(false);
 
   const {
     folder: activeFolder = folders.activeFolder
@@ -47,13 +49,13 @@ const SideMenu: FC<SideMenuProps> = ({ folders }) => {
   const foldersIds = folders.ids.length > 0 ? folders.ids : foldersSort;
   const orderedFolders = getFoldersOrder(foldersSort, foldersIds);
 
-  const openSettings = useCallback(() => {
-    setSettingsOpen(true);
-  }, []);
+  const openSettings = () => setSettingsOpen(true);
 
-  const closeSettings = useCallback(() => {
-    setSettingsOpen(false);
-  }, []);
+  const closeSettings = () => setSettingsOpen(false);
+
+  const openCompose = () => setComposeOpen(true);
+
+  const closeCompose = () => setComposeOpen(false);
 
   useEffect(() => {
     setLoaded(true);
@@ -67,6 +69,7 @@ const SideMenu: FC<SideMenuProps> = ({ folders }) => {
           contentAlign={ContentAlign.Center}
           mode={ButtonMode.Primary}
           className={S.button}
+          onClick={openCompose}
         >
           <PancilIcon className={S.pancilIcon} />
           <span className={S.buttonName}>
@@ -142,7 +145,9 @@ const SideMenu: FC<SideMenuProps> = ({ folders }) => {
           {applyLanguage(['Настройки', 'Settings'])}
         </span>
       </Button>
+
       {isSettingsOpen && <Settings onClose={closeSettings} />}
+      {isComposeOpen && <LetterCompose onClose={closeCompose} />}
     </div>
   );
 };

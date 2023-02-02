@@ -18,6 +18,7 @@ const Button: FC<ButtonProps> = ({
   className,
   href,
   ref,
+  disabled,
   ...other
 }) => {
   const rootCn = classnames(
@@ -29,6 +30,7 @@ const Button: FC<ButtonProps> = ({
       [S.contrast]: mode === ButtonMode.Contrast,
       [S.stretch]: stretch,
       [S.selected]: selected,
+      [S.disabled]: disabled,
     },
     className,
   );
@@ -36,7 +38,7 @@ const Button: FC<ButtonProps> = ({
   return (
     <div
       ref={ref}
-      onClick={onClick}
+      onClick={disabled ? undefined : onClick}
       className={rootCn}
       {...other}
     >

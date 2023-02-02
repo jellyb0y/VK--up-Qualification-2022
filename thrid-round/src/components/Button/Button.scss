@@ -73,6 +73,10 @@
   &:active {
     filter: brightness(90%);
   }
+
+  &.disabled {
+    filter: saturate(10%);
+  }
 }
 
 .contrast {

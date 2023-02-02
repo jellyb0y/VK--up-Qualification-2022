@@ -24,6 +24,14 @@ export type SetLetterLoadingAction = BaseAction<'@letters/SET_LETTER_LOADING'>;
 
 export type SetLetterLoadedAction = BaseAction<'@letters/SET_LETTER_LOADED'>;
 
+export type SetLetterSendingAction = BaseAction<'@letters/SET_LETTER_SENDING'>;
+
+export type SetLetterSentAction = BaseAction<'@letters/SET_LETTER_SENT'>;
+
+export type SetSendingErrorAction = BaseAction<'@letters/SET_SENDING_ERROR'>;
+
+export type ClearSendingFormAction = BaseAction<'@letters/CLEAR_SENDING_FORM'>;
+
 export type ActionTypes =
   | UpdateLettersAction
   | UpdateLetterDataAction
@@ -31,4 +39,8 @@ export type ActionTypes =
   | SetLetterErrorAction
   | SetLetterLoadingAction
   | SetLetterLoadedAction
-  | SetLetterDocAction;
+  | SetLetterDocAction
+  | SetLetterSendingAction
+  | SetLetterSentAction
+  | SetSendingErrorAction
+  | ClearSendingFormAction;

@@ -1,0 +1,24 @@
+.root {
+  display: flex;
+  align-items: center;
+  padding: 8px 10px;
+}
+
+.modificator {
+  background-color: transparent;
+  outline: none;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  transition-duration: .1s;
+  opacity: .7;
+  fill: var(--primaryTextColor);
+
+  &:hover {
+    opacity: 1;
+  }
+}

@@ -14,6 +14,7 @@ export enum ButtonMode {
 }
 
 export interface ButtonProps extends HTMLAttributes<HTMLDivElement>{
+  disabled?: boolean;
   contentAlign?: ContentAlign;
   className?: string;
   onClick?: () => void;

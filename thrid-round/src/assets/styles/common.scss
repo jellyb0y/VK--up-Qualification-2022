@@ -24,8 +24,10 @@ b {
   font-weight: 700;
 }
 
-ul {
-  list-style: none;
+ul, ol {
+  padding-inline-start: 30px;
+  margin-block-start: 1em;
+  margin-block-end: 1em;
 }
 
 div[id="root"] {

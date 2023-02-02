@@ -77,12 +77,17 @@ const LetterShortCut: FC<LetterShortCutProps> = ({
           )}
         </div>
         <div className={S.text}>
-          <span className={S.title}>
-            {title}
-          </span>
-          <span className={S.shortText}>
-            {shortText}
-          </span>
+          {title && (
+            <span className={S.title}>
+              {title}
+            </span>
+          )}
+          {shortText && (
+            <span
+              className={S.shortText}
+              dangerouslySetInnerHTML={{ __html: shortText }}
+            />
+          )}
         </div>
         <div className={S.categories}>
           {category && <Category category={category} className={S.categoryIcon} />}

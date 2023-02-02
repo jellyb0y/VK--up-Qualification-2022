@@ -6,14 +6,22 @@ import type {
   UpdateLettersAction,
   SetLetterLoadedAction,
   SetLetterDocAction,
+  SetLetterSendingAction,
+  SetLetterSentAction,
+  SetSendingErrorAction,
+  ClearSendingFormAction,
 } from './types';
 
 import {
+  CLEAR_SENDING_FORM,
   SET_LETTER,
   SET_LETTER_DOC,
   SET_LETTER_ERROR,
   SET_LETTER_LOADED,
   SET_LETTER_LOADING,
+  SET_LETTER_SENDING,
+  SET_LETTER_SENT,
+  SET_SENDING_ERROR,
   UPDATE_LETTERS,
   UPDATE_LETTER_DATA,
 } from './actions';
@@ -51,4 +59,20 @@ export const setLetterDocAction = (letterId: string, doc: Letter['doc']): SetLet
   type: SET_LETTER_DOC,
   letterId,
   doc,
+});
+
+export const setLetterSendingAction = (): SetLetterSendingAction => ({
+  type: SET_LETTER_SENDING,
+});
+
+export const setLetterSentAction = (): SetLetterSentAction => ({
+  type: SET_LETTER_SENT,
+});
+
+export const setSendingErrorAction = (): SetSendingErrorAction => ({
+  type: SET_SENDING_ERROR,
+});
+
+export const clearSendingFormAction = (): ClearSendingFormAction => ({
+  type: CLEAR_SENDING_FORM,
 });

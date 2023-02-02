@@ -19,9 +19,20 @@ export const useOverlay = <T extends HTMLElement>(options: Options) => {
   const containerRef = useRef<T>();
 
   const handleClick = useCallback((event: Event) => {
-    const target = event.target as HTMLElement;
+    const containerElem = containerRef.current;
 
-    if (target.getAttribute(IGNORE_ATTRIBUTE_NAME) === IGNORE_ATTRIBUTE_VALUE) {
+    if (!containerElem) {
+      return;
+    }
+
+    const target = event.target as HTMLElement;
+    const ignoreElements = document.querySelectorAll(`[${IGNORE_ATTRIBUTE_NAME}="${IGNORE_ATTRIBUTE_VALUE}"]`);
+
+    const isTargetInsideIgnoreElements = Array.from(ignoreElements).some((element) => {
+      return element.contains(target);
+    });
+
+    if (isTargetInsideIgnoreElements) {
       return;
     }
 
@@ -35,10 +46,12 @@ export const useOverlay = <T extends HTMLElement>(options: Options) => {
       return;
     }
 
-    window.addEventListener('click', handleClick, true);
+    window.addEventListener('mousedown', handleClick, true);
+    window.addEventListener('touchstart', handleClick, true);
     
     return () => {
-      window.removeEventListener('click', handleClick, true);
+      window.removeEventListener('mousedown', handleClick, true);
+      window.removeEventListener('touchstart', handleClick, true);
     };
   }, [containerRef.current, visible, handleClick]);
 

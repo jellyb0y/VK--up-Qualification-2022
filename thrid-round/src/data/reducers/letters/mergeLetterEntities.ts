@@ -13,7 +13,7 @@ export const mergeLetterEntities = (entitiesA: UnionLettersEntity['entities'], e
     if (letter.type === 'full') {
       result[letter.id] = {
         ...result[letter.id],
-        ...letter
+        ...letter,
       };
     }
   });

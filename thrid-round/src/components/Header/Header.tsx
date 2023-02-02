@@ -68,7 +68,10 @@ const Header: FC = () => {
       )}
       {!isLetterPage && (
         <Button
-          {...IGNORE_ATTRIBUTES}
+          {...(isFiltersOpen
+            ? IGNORE_ATTRIBUTES
+            : null
+          )}
           onClick={toogleFilters}
           className={S.filters}
         >

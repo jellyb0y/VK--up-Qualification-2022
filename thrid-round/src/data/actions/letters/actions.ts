@@ -5,3 +5,7 @@ export const SET_LETTER_ERROR = '@letters/SET_LETTER_ERROR';
 export const SET_LETTER_LOADING = '@letters/SET_LETTER_LOADING';
 export const SET_LETTER_LOADED = '@letters/SET_LETTER_LOADED';
 export const SET_LETTER_DOC = '@letters/SET_LETTER_DOC';
+export const SET_LETTER_SENDING = '@letters/SET_LETTER_SENDING';
+export const SET_SENDING_ERROR = '@letters/SET_SENDING_ERROR';
+export const SET_LETTER_SENT = '@letters/SET_LETTER_SENT';
+export const CLEAR_SENDING_FORM = '@letters/CLEAR_SENDING_FORM';

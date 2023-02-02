@@ -28,7 +28,7 @@ const Avatar: FC<AvatarProps> = ({
       style={styles}
       className={classnames(S.root, className)}
     >
-      {stub || !data ? userName[0] : undefined}
+      {stub || !data ? userName[0].toUpperCase() : undefined}
     </div>
   )
 };

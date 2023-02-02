@@ -56,10 +56,15 @@ const SettingsContainer: FC<SettingsContainerProps> = ({
     });
 
     return () => {
-      rootElement.style.transform = null;
       window.removeEventListener('click', onClickOutside, true);
     }
   }, [containerRef.current, onClickOutside]);
+
+  useEffect(() => {
+    return () => {
+      rootElement.style.transform = null;
+    }
+  }, []);
 
   return createPortal(
     <Settings containerRef={containerRef} />,

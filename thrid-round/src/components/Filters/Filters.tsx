@@ -8,6 +8,7 @@ import AttachIcon from '@assets/images/attach.svg';
 
 import { updateFiltersResolver } from '@data/resolvers/filters/updateFiltersResolver';
 import { useLanguages } from '@lib/Languages/useLanguages';
+import { useOverlay } from '@hooks/useOverlay';
 
 import {
   resetFiltersAction,
@@ -27,7 +28,6 @@ import type { FiltersProps } from './types';
 import type { State } from '@data/types';
 import type { ActionCreator } from '@reduxjs/toolkit';
 import type { ThunkActionDispatch } from 'redux-thunk';
-import { useOverlay } from '@hooks/useOverlay';
 
 const mapDispatchToProps = (dispatch: ThunkActionDispatch<ActionCreator<any>>) => ({
   resetFilters: () => dispatch(updateFiltersResolver(resetFiltersAction)),

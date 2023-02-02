@@ -3,3 +3,5 @@
 */dist/*
 !*/dist/.gitkeep
 *.zip
+*/resourses/db.json
+!*/resourses

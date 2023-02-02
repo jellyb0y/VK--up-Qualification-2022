@@ -6,12 +6,13 @@ import Server from '@lib/Server';
 import { getThemeConfig } from '@lib/Themes/themeRegistry';
 import { applyTheme } from './applyTheme';
 import { getSelectedLang } from '@lib/Languages/getSelectedLanguage';
+import { Languages } from '@lib/Languages/types';
 
 export const rendererRouter = Server.route();
 
 rendererRouter.get('*', async (req, res) => {
   try {
-    const lang = getSelectedLang(req.headers.cookie);
+    const lang = getSelectedLang(req.headers.cookie) || Languages.Ru;
     const theme = getSelectedTheme(req.headers.cookie);
     const themeConfig = getThemeConfig(theme);
     const scheme = themeConfig?.scheme || getSelectedScheme(req.headers.cookie);

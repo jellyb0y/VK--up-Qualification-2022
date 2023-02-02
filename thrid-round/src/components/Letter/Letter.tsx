@@ -124,9 +124,10 @@ const Letter: FC<LetterProps> = ({
           </div>
         )
       )}
-      <div className={S.body}>
-        {text}
-      </div>
+      <div
+        className={S.body}
+        dangerouslySetInnerHTML={{ __html: text }}
+      />
     </div>
   );
 };
