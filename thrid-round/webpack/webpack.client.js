@@ -28,9 +28,6 @@ module.exports = merge(common, {
     clean: false,
   },
   plugins: [
-    /* new webpack.SourceMapDevToolPlugin({
-      publicPath: '/static/',
-    }), */
     new HtmlWebpackPlugin({
       template: path.resolve(__dirname, '../src/assets/html/index.html'),
       filename: path.resolve(__dirname, '../dist/index.html'),

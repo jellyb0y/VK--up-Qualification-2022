@@ -14,7 +14,7 @@ import { useLangContext } from '@lib/Languages/useContext';
 
 import S from './LetterShortCut.scss';
 
-import type { FC, MouseEventHandler } from 'react';
+import type { DragEventHandler, FC, MouseEventHandler } from 'react';
 import type { LetterShortCutProps } from './types';
 
 const LetterShortCut: FC<LetterShortCutProps> = ({
@@ -34,6 +34,11 @@ const LetterShortCut: FC<LetterShortCutProps> = ({
   const { lang } = useLangContext();
   const { hasAvatar, name: authorName } = authorUser;
 
+  const onDragStart: DragEventHandler<HTMLAnchorElement> = (event) => {
+    event.dataTransfer.setData('text/plain', id);
+    event.dataTransfer.effectAllowed = 'move';
+  };
+
   const rootCn = classnames(S.root, {
     [S.notRead]: !read,
   });
@@ -52,7 +57,13 @@ const LetterShortCut: FC<LetterShortCutProps> = ({
   };
   
   return (
-    <Link to={getLetterUrl(folder, id)} className={rootCn}>
+    <Link
+      // Добавляем draggable
+      draggable
+      to={getLetterUrl(folder, id)}
+      className={rootCn}
+      onDragStart={onDragStart}
+    >
       <div className={readMarkCn} />
       <div
         onClick={onCheckboxClick}

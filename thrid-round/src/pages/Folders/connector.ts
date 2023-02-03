@@ -8,8 +8,7 @@ import { loadMoreLettersResolver } from '@data/resolvers/letters/loadMoreLetters
 
 import type { State } from '@data/types';
 import type { Letter, ShortLetter } from '@database/types';
-import type { ThunkActionDispatch } from 'redux-thunk';
-import type { ActionCreator } from '@reduxjs/toolkit';
+import type { ThunkDispatch } from '@data/types/actions';
 
 const mapStateToProps = (state: State) => {
   const activeFolder = state.folders.activeFolder;
@@ -33,7 +32,7 @@ const mapStateToProps = (state: State) => {
   };
 };
 
-const mapDispatchToProps = (dispatch: ThunkActionDispatch<ActionCreator<any>>) => ({
+const mapDispatchToProps = (dispatch: ThunkDispatch) => ({
   preloadLetters: (index: number) => dispatch(loadMoreLettersResolver(index)),
 });
 

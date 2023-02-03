@@ -13,6 +13,7 @@ import S from './Wysiwyg.scss';
 import type { WysiwygProps } from './types';
 
 const Wysiwyg = forwardRef<HTMLDivElement, WysiwygProps>(({
+  controlsSlot,
   className,
   onStatusChange,
 }, ref) => {
@@ -22,7 +23,10 @@ const Wysiwyg = forwardRef<HTMLDivElement, WysiwygProps>(({
 
   return (
     <div className={rootCn}>
-      <Midificators modificators={MODIFICATORS} />
+      <Midificators
+        slot={controlsSlot}
+        modificators={MODIFICATORS}
+      />
       <div className={S.fieldContainer}>
         <EditableField
           ref={ref}

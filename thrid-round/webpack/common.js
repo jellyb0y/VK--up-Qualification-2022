@@ -10,7 +10,7 @@ const isProduction = process.env.MODE === 'production';
 
 module.exports = {
   mode: isProduction ? 'production' : 'development',
-  devtool: !isProduction && 'inline-source-map',
+  devtool: !isProduction && 'source-map',
   resolve: {
     extensions: ['.ts', '.tsx', '.js', '.scss'],
     plugins: [

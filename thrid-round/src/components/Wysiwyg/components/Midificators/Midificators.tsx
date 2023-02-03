@@ -7,6 +7,7 @@ import type { Comand, MidificatorsProps } from './types';
 
 const Midificators: FC<MidificatorsProps> = ({
   modificators,
+  slot,
 }) => {
   const execModificator = useCallback((comand: Comand) => {
     if (typeof comand === 'function') {
@@ -32,6 +33,9 @@ const Midificators: FC<MidificatorsProps> = ({
           <Icon />
         </button>
       ))}
+      <div className={S.slot}>
+        {slot}
+      </div>
     </div>
   );
 };

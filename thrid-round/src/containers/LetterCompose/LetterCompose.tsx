@@ -4,10 +4,13 @@ import { KeyboardEventHandler, useMemo, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 
 import CloseIcon from '@assets/images/close.svg';
+import AttachIcon from '@assets/images/attach.svg';
 
 import Wysiwyg from '@components/Wysiwyg';
 import Button, { ButtonMode } from '@components/Button';
 import Address from './components/Address/Address';
+import DragNDrop from '@components/DragNDropArea';
+import FileComponent from './components/File';
 
 import { useOverlay } from '@hooks/useOverlay';
 import { useLanguages } from '@lib/Languages/useLanguages';
@@ -19,13 +22,12 @@ import S from './LetterCompose.scss';
 
 import type { FC } from 'react';
 import type { LetterComposeProps } from './types';
-import type { ThunkActionDispatch } from 'redux-thunk';
-import type { ActionCreator } from 'redux';
 import type { SendLetterParams } from '@data/resourses/letters/sendLetter';
 import type { State } from '@data/types';
+import type { ThunkDispatch } from '@data/types/actions';
 
 const mapDispatchToProps = (
-  dispatch: ThunkActionDispatch<ActionCreator<any>>,
+  dispatch: ThunkDispatch,
   props: Pick<LetterComposeProps, 'onClose'>,
 ) => ({
   sendLetter: (data: SendLetterParams) => dispatch(sendLetterResolver(data)),
@@ -48,11 +50,13 @@ const LetterCompose: FC<LetterComposeProps> = ({
   onClose,
   sendLetter,
 }) => {
+  const [attachFiles, setAttachFiles] = useState<File[]>([]);
   const [selectedAddresses, setSelectedAddresses] = useState<string[]>([]);
   const [isFieldEmpty, setFieldEmpty] = useState(true);
   
   const applyLanguage = useLanguages();
 
+  const attachInputRef = useRef<HTMLInputElement>();
   const subjRef = useRef<HTMLInputElement>();
   const fieldRef = useRef<HTMLDivElement>();
   const containerRef = useOverlay<HTMLDivElement>({ onClose });
@@ -121,6 +125,30 @@ const LetterCompose: FC<LetterComposeProps> = ({
     });
   };
 
+  const addFiles = (attachedFiles: File[] | FileList) => {
+    setAttachFiles((files) => [...files, ...attachedFiles]);
+  };
+
+  const removeFile = (file: File) => setAttachFiles((files) => {
+    const newFiles = [...files];
+    const index = newFiles.indexOf(file);
+    if (index !== -1) {
+      newFiles.splice(index, 1);
+    }
+    return newFiles;
+  });
+
+  const onClickAttach = () => {
+    attachInputRef.current?.click();
+  };
+
+  const onAttach = () => {
+    const files = attachInputRef.current?.files;
+    if (files?.length) {
+      addFiles(files);
+    }
+  };
+
   const isButtonDisabled = useMemo(() => (
     !selectedAddresses.length || isFieldEmpty
   ), [selectedAddresses, fieldRef.current, isFieldEmpty]);
@@ -132,6 +160,13 @@ const LetterCompose: FC<LetterComposeProps> = ({
   return createPortal((
     <div className={S.shadow}>
       <div ref={containerRef} className={S.modal}>
+        <DragNDrop
+          className={S.dng}
+          onDropFile={addFiles}
+          onDragClassName={S.dngActive}
+        >
+          {applyLanguage(['Перетащите файлы сюда', 'Drop file here'])}
+        </DragNDrop>
         <div
           onClick={onClose}
           className={S.closeButton}
@@ -195,10 +230,38 @@ const LetterCompose: FC<LetterComposeProps> = ({
             <span>{applyLanguage(['Тема', 'Subject'])}</span>
             <input ref={subjRef} className={S.input} />
           </div>
+          {attachFiles.length ? (
+            <div className={S.files}>
+              {attachFiles.map((file, index) => (
+                <FileComponent
+                  key={index}
+                  className={S.file}
+                  onRemove={() => removeFile(file)}
+                  file={file}
+                />
+              ))}
+            </div>
+          ) : null}
           <Wysiwyg
             ref={fieldRef}
             className={S.wysiwyg}
             onStatusChange={checkFieldEmpty}
+            controlsSlot={(
+              <Button
+                onClick={onClickAttach}
+                className={S.attachButton}
+                mode={ButtonMode.Transparent}
+              >
+                <AttachIcon />
+                {applyLanguage(['Прикрепить файл', 'Attach file'])}
+                <input
+                  ref={attachInputRef}
+                  type="file"
+                  multiple
+                  onChange={onAttach}
+                />
+              </Button>
+            )}
           />
           {!isStatusWindowOpen && (
             <div className={S.controls}>

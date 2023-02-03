@@ -12,7 +12,7 @@ import {
 import type { Dispatch } from '@reduxjs/toolkit';
 import type { State } from '@data/types';
 
-export const getLettersResolver = (folder: string) => {
+export const getLettersResolver = (folder: string, setActiveLetter = true) => {
   return (dispatch: Dispatch, getState: () => State) => {
     const { filters } = getState();
 
@@ -25,7 +25,10 @@ export const getLettersResolver = (folder: string) => {
         dispatch(setFolderLettersCountAction(folder, totalLetters));
 
         dispatch(setFolderLettersAction(folder, letters.ids));
-        dispatch(setFolderAction(folder));
+        
+        if (setActiveLetter) {
+          dispatch(setFolderAction(folder));
+        }
       })
       .catch((error) => {
         console.error(error);

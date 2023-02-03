@@ -1,7 +1,11 @@
 import classnames from 'classnames';
-import { useCallback, useEffect, useState } from 'react'; 
+import { connect } from 'react-redux';
+import { useCallback, useEffect, useMemo, useState } from 'react'; 
 import { Link, useMatch, useNavigate, useParams } from 'react-router-dom';
 
+import ReadIcon from '@assets/images/read.svg';
+import SelectedBookmarkIcon from '@assets/images/bookmark_selected.svg';
+import AttachIcon from '@assets/images/attach.svg';
 import LogoLight from '@assets/images/logo.svg';
 import LogoDark from '@assets/images/logo_dark.svg';
 import BackArrow from '@assets/images/back_arrow.svg';
@@ -18,8 +22,16 @@ import * as Routes from '@app/routes';
 import S from './Header.scss';
 
 import type { FC } from 'react';
+import type { State } from '@data/types';
+import type { FiltersProps } from '@components/Filters/types';
 
-const Header: FC = () => {
+const mapStateToProps = (state: State) => ({
+  filters: state.filters,
+});
+
+const Header: FC<FiltersProps> = ({
+  filters,
+}) => {
   const [isFiltersOpen, setFiltersOpen] = useState(false);
 
   const isLetterPage = !!useMatch(Routes.LETTER_PATH);
@@ -46,6 +58,32 @@ const Header: FC = () => {
   const onFiltersClose = () => {
     setFiltersOpen(false);
   };
+
+  const activeFilterIcons = (
+    <div className={S.activeFilters}>
+      {[
+        filters.readFilter && ReadIcon,
+        filters.bookmarkFilter && SelectedBookmarkIcon,
+        filters.attachmentsFilter && AttachIcon,
+      ].map((Icon, index) => Icon && (
+          <Icon key={index} />
+      ))}
+    </div>
+  );
+
+  const activeFiltersName = useMemo(() => {
+    const filtersList = [
+      filters.readFilter && applyLanguage(['Непрочитанные', 'Unread']),
+      filters.bookmarkFilter && applyLanguage(['С флажком', 'Flagged']),
+      filters.attachmentsFilter && applyLanguage(['С вложениями', 'With attachments']),
+    ].filter(Boolean);
+
+    if (filtersList.length === 1) {
+      return filtersList[0];
+    }
+
+    return applyLanguage(['Фильтр', 'Filter']);
+  }, [filters, applyLanguage]);
 
   const filterArrowCn = classnames(S.filterArrow, {
     [S.filterArrowReverted]: isFiltersOpen,
@@ -75,7 +113,8 @@ const Header: FC = () => {
           onClick={toogleFilters}
           className={S.filters}
         >
-          {applyLanguage(['Фильтр', 'Filter'])}
+          {activeFilterIcons}
+          {activeFiltersName}
           <ArrowBottom className={filterArrowCn} />
         </Button>
       )}
@@ -89,4 +128,4 @@ const Header: FC = () => {
   );
 };
 
-export default Header;
+export default connect(mapStateToProps)(Header);

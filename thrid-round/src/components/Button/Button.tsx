@@ -6,9 +6,9 @@ import { ButtonMode, ContentAlign } from './types';
 import S from './Button.scss';
 
 import type { ButtonProps } from './types';
-import type { FC } from 'react';
+import { forwardRef } from 'react';
 
-const Button: FC<ButtonProps> = ({
+const Button = forwardRef<HTMLDivElement, ButtonProps>(({
   onClick,
   mode = ButtonMode.Transparent,
   contentAlign = ContentAlign.Left,
@@ -17,10 +17,9 @@ const Button: FC<ButtonProps> = ({
   selected,
   className,
   href,
-  ref,
   disabled,
   ...other
-}) => {
+}, ref) => {
   const rootCn = classnames(
     S.root,
     S[`contentAlign_${contentAlign}`],
@@ -51,6 +50,6 @@ const Button: FC<ButtonProps> = ({
       {children}
     </div>
   );
-};
+});
 
 export default Button;

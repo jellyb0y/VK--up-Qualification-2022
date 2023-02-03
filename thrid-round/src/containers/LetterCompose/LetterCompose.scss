@@ -40,9 +40,43 @@
 }
 
 .content {
+  position: relative;
   display: flex;
   flex-direction: column;
   height: 100%;
+}
+
+.dng {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 4;
+  
+  &Active {
+    border-radius: 12px;
+    border: 2px dashed var(--secondaryTextColor);
+
+    font-size: 25px;
+    color: var(--primaryTextColor);
+    
+    &::after {
+      content: '';
+      position: absolute;
+      background-color: var(--popupBgColor);
+      opacity: 0.8;
+      width: 100%;
+      height: 100%;
+    }
+
+    @include useMediaTablet {
+      border-radius: 0;
+    }
+  }
 }
 
 .blur {
@@ -93,19 +127,33 @@
 
 .wysiwyg,
 .controls,
-.field {
+.field,
+.files {
   padding-top: 1px;
   position: relative;
 
   &::before {
     position: absolute;
-    top: -1px;
+    top: 0;
     left: 0;
     content: '';
     height: 1px;
     width: 100%;
     background-color: var(--primaryTextColor);
     opacity: .12;
+  }
+}
+
+.files {
+  overflow-x: auto;
+  display: flex;
+  padding: 12px;
+
+  .file {
+    flex-shrink: 0;
+    + .file {
+      margin-left: 12px;
+    }
   }
 }
 
@@ -177,6 +225,21 @@
   display: flex;
   justify-content: flex-end;
   padding: 16px 20px;
+}
+
+.attachButton {
+  position: relative;
+  height: 32px;
+  color: var(--secondaryTextColor);
+
+  svg {
+    fill: var(--secondaryTextColor);
+    margin-right: 8px;
+  }
+
+  input {
+    display: none;
+  }
 }
 
 @keyframes fade-in-up {

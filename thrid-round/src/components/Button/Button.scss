@@ -75,7 +75,8 @@
   }
 
   &.disabled {
-    filter: saturate(10%);
+    filter: saturate(15%) brightness(2);
+    cursor: default;
   }
 }
 

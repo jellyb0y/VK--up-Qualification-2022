@@ -15,17 +15,18 @@ export type GetLettersResponse = {
 
 const CancelToken = axios.CancelToken;
 
-const makeInstance = (function () {
-  if (this.source) {
+const makeInstance = (function (folder: string) {
+  if (this.source && this.folder === folder) {
     this.source.cancel();
   }
 
+  this.folder = folder;
   this.source = CancelToken.source();
   return this.source;
 }).bind({});
 
 export const getLetters = async (folder: string, filters: FiltersState, from?: number, to?: number): Promise<GetLettersResponse> => {
-  const instance = makeInstance();
+  const instance = makeInstance(folder);
 
   const filtersParams = {
     sortType: filters.sortType,

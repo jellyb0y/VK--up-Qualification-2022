@@ -2,6 +2,7 @@ import { useEffect, useMemo } from 'react';
 import { connect } from 'react-redux';
 
 import Avatar from '@components/Avatar';
+import Category from '@components/Category';
 import StubComponent from '@components/StubComponent';
 import ImportantIcon from '@assets/images/important.svg';
 
@@ -15,13 +16,11 @@ import S from './Letter.scss';
 
 import type { FC } from 'react';
 import type { LetterProps } from './types';
-import type { ActionCreator } from '@reduxjs/toolkit';
-import type { ThunkActionDispatch } from 'redux-thunk';
-import Category from '@components/Category';
+import type { ThunkDispatch } from '@data/types/actions';
 
 const MAX_RECEIPIENTS_COUNT = 3;
 
-const mapDispatchToProps = (dispatch: ThunkActionDispatch<ActionCreator<any>>) => ({
+const mapDispatchToProps = (dispatch: ThunkDispatch) => ({
   loadDoc: (id: string) => dispatch(getLetterDocResolver(id)),
 });
 

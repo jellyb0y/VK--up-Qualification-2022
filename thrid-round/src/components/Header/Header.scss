@@ -70,6 +70,16 @@
   }
 }
 
+.activeFilters {
+  display: flex;
+  align-items: center;
+  margin-right: 8px;
+
+  svg path {
+    fill: var(--primaryHeaderTextColor);
+  }
+}
+
 .filtersContainer {
   position: absolute;
   top: calc(100% - 4px);

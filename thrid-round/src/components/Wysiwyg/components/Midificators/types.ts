@@ -1,6 +1,7 @@
-import type { FC } from 'react';
+import type { FC, ReactNode } from 'react';
 
 export interface MidificatorsProps {
+  slot?: ReactNode;
   modificators: ModificatorsList;
 }
 

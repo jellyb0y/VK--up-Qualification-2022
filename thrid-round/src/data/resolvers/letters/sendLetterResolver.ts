@@ -1,15 +1,14 @@
 import { setLetterSendingAction, setLetterSentAction, setSendingErrorAction } from '@data/actions/letters';
 import { sendLetter } from '@data/resourses/letters/sendLetter';
-
-import type { ActionCreator } from '@reduxjs/toolkit';
-import type { SendLetterParams } from '@data/resourses/letters/sendLetter';
-import type { ThunkActionDispatch } from 'redux-thunk';
 import { getLettersResolver } from './getLettersResolver';
+
+import type { SendLetterParams } from '@data/resourses/letters/sendLetter';
+import type { ThunkDispatch } from '@data/types/actions';
 
 const SENT_LETTERS_FOLDER = 'sent';
 
 export const sendLetterResolver = (params: SendLetterParams) => {
-  return (dispatch: ThunkActionDispatch<ActionCreator<any>>) => {
+  return (dispatch: ThunkDispatch) => {
     dispatch(setLetterSendingAction());
 
     sendLetter(params)
@@ -17,7 +16,7 @@ export const sendLetterResolver = (params: SendLetterParams) => {
         dispatch(setLetterSentAction());
 
         // Обновляем список отправленных писем 
-        dispatch(getLettersResolver(SENT_LETTERS_FOLDER));
+        dispatch(getLettersResolver(SENT_LETTERS_FOLDER, false));
       })
       .catch((error) => {
         console.error(error);

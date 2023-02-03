@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import classnames from 'classnames';
@@ -17,6 +17,8 @@ import { getFoldersOrder } from './utils/getFoldersOrder';
 import { getFolderUrl } from '@utils/getFolderUrl';
 import { useLanguages } from '@lib/Languages/useLanguages';
 import { getTranslation } from './getTranslation';
+import { moverLetterResolver } from '@data/resolvers/letters/moverLetterResolver';
+import { DragObserverType, DropCallbacks, useDragNDrop } from '@hooks/useDragNDrop';
 
 import { ScreenType, useScreenObserver } from '@root/hooks/useScreenObserver';
 
@@ -27,13 +29,65 @@ import S from './SideMenu.scss';
 
 import type { FC } from 'react';
 import type { State } from '@data/types';
-import type { SideMenuProps } from './types';
+import type { MenuButtonProps, SideMenuProps } from './types';
+import type { ThunkDispatch } from '@data/types/actions';
+
+const MenuButton: FC<MenuButtonProps> = ({
+  id,
+  folders,
+  isLoaded,
+  activeFolder,
+  applyLanguage,
+  onMoveLetter,
+}) => {
+  const { isDragOver, containerRef } = useDragNDrop<HTMLDivElement, DragObserverType.Text, DropCallbacks[DragObserverType.Text]>(
+    DragObserverType.Text,
+    // @ts-expect-error
+    (letterId: string) => onMoveLetter(id, letterId),
+  );
+
+  const IconComponent = FOLDER_ICONS[id] || DEFAULT_ICON;
+  const { name } = folders[id] || {};
+  const url = id === DEFAULT_FOLDER ? ROOT_PATH : getFolderUrl(id);
+
+  return (
+    <Button
+      key={id}
+      href={url}
+      stretch
+      // Fix: несовпадение html при гидрации
+      selected={isLoaded && id === activeFolder || isDragOver}
+      contentAlign={ContentAlign.Left}
+      mode={ButtonMode.Contrast}
+      ref={containerRef}
+      className={classnames(S.listItem, S.button)}
+    >
+      <span className={S.iconWrapper}>
+        <IconComponent className={S.icon}/>
+      </span>
+      {name ? (
+        <span className={S.buttonName}>
+          {applyLanguage([name, getTranslation(name)])}
+        </span>
+      ) : (
+        <StubComponent
+          className={classnames(S.buttonName, S.buttonNameStub)}
+        />
+      )}
+      {/* <span className={S.counter}>{letters.length}</span> */}
+    </Button>
+  );
+};
 
 const mapStateToProps = (state: State) => ({
   folders: state.folders,
 });
 
-const SideMenu: FC<SideMenuProps> = ({ folders }) => {
+const mapDispatchToProps = (dispatch: ThunkDispatch) => ({
+  onMoveLetter: (folderTo: string, id: string) => dispatch(moverLetterResolver(folderTo, id)),
+});
+
+const SideMenu: FC<SideMenuProps> = ({ folders, onMoveLetter }) => {
   const [isSettingsOpen, setSettingsOpen] = useState(false);
   const [isComposeOpen, setComposeOpen] = useState(false);
 
@@ -88,38 +142,17 @@ const SideMenu: FC<SideMenuProps> = ({ folders }) => {
               <BurgerIcon className={S.icon}/>
             </Button>
           )}
-          {orderedFolders.map((id) => {
-            const IconComponent = FOLDER_ICONS[id] || DEFAULT_ICON;
-            const { name } = folders.entities[id] || {};
-            const url = id === DEFAULT_FOLDER ? ROOT_PATH : getFolderUrl(id);
-
-            return (
-              <Button
-                key={id}
-                href={url}
-                stretch
-                // Fix: несовпадение html при гидрации
-                selected={isLoaded && id === activeFolder}
-                contentAlign={ContentAlign.Left}
-                mode={ButtonMode.Contrast}
-                className={classnames(S.listItem, S.button)}
-              >
-                <span className={S.iconWrapper}>
-                  <IconComponent className={S.icon}/>
-                </span>
-                {name ? (
-                  <span className={S.buttonName}>
-                    {applyLanguage([name, getTranslation(name)])}
-                  </span>
-                ) : (
-                  <StubComponent
-                    className={classnames(S.buttonName, S.buttonNameStub)}
-                  />
-                )}
-                {/* <span className={S.counter}>{letters.length}</span> */}
-              </Button>
-            );
-          })}
+          {orderedFolders.map((id) => (
+            <MenuButton
+              id={id}
+              key={id}
+              isLoaded={isLoaded}
+              folders={folders.entities}
+              activeFolder={activeFolder}
+              onMoveLetter={onMoveLetter}
+              applyLanguage={applyLanguage}
+            />
+          ))}
         </div>
         <Button
           stretch
@@ -152,4 +185,4 @@ const SideMenu: FC<SideMenuProps> = ({ folders }) => {
   );
 };
 
-export default connect(mapStateToProps)(SideMenu);
+export default connect(mapStateToProps, mapDispatchToProps)(SideMenu);

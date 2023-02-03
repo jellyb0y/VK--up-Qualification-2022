@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { useCallback, useEffect, useRef } from 'react';
+import { useCallback } from 'react';
 import classnames from 'classnames';
 
 import FilterItem from './components/FilterItem/FilterItem';
@@ -26,10 +26,9 @@ import S from './Filters.scss';
 import type { FC } from 'react';
 import type { FiltersProps } from './types';
 import type { State } from '@data/types';
-import type { ActionCreator } from '@reduxjs/toolkit';
-import type { ThunkActionDispatch } from 'redux-thunk';
+import type { ThunkDispatch } from '@data/types/actions';
 
-const mapDispatchToProps = (dispatch: ThunkActionDispatch<ActionCreator<any>>) => ({
+const mapDispatchToProps = (dispatch: ThunkDispatch) => ({
   resetFilters: () => dispatch(updateFiltersResolver(resetFiltersAction)),
   toogleBookmarkFilter: () => dispatch(updateFiltersResolver(toogleBookmarkFilterAction)),
   toogleReadFilter: () => dispatch(updateFiltersResolver(toogleReadFilterAction)),

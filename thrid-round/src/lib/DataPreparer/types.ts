@@ -1,6 +1,6 @@
 import type { State } from '@data/types';
-import type { ActionCreator, Dispatch, Store } from '@reduxjs/toolkit';
-import type { ThunkActionDispatch } from 'redux-thunk';
+import type { ThunkDispatch } from '@data/types/actions';
+import type { Dispatch, Store } from '@reduxjs/toolkit';
 
 export interface PreparerProviderProps {
   store: Store;
@@ -16,7 +16,7 @@ export type DependsOnFunc = (state: State) => object;
 export type PreparerDepsStates = Record<number, object>;
 
 export type PreparerFunc<P> = (
-  dispatch: ThunkActionDispatch<ActionCreator<any>>,
+  dispatch: ThunkDispatch,
   getState: () => State,
   props: P
 ) => Promise<void> | void;

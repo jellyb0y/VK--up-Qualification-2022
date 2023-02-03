@@ -22,5 +22,4 @@ export interface ButtonProps extends HTMLAttributes<HTMLDivElement>{
   stretch?: boolean;
   selected?: boolean;
   href?: string;
-  ref?: RefObject<HTMLDivElement>;
 }
