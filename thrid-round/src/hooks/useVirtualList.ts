@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { debounce } from 'lodash';
+import debounce from 'lodash/debounce';
 import { useIsomorphicLayoutEffect } from './useIsomorphicLayoutEffect';
 
 export type PreloadCallback = (indexTo: number) => void; 

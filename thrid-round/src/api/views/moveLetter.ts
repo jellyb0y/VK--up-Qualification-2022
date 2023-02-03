@@ -6,7 +6,7 @@ export const moveLetter: Entrypoint = (req, res) => {
   const { body } = req;
   const parsedBody = JSON.parse(body);
 
-  const data = parsedBody.data as MoveLetterParams;
+  const data = parsedBody as MoveLetterParams;
 
   if (!data) {
     res.statusCode = 400;

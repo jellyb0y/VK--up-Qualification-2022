@@ -47,13 +47,11 @@ export const withDataPreparer = <P extends {}>(
 
       const isPreparerNeedToBeRun = (context && isAvailable && (
         every ||
-        !context.usedPreparers[id] ||
         !deepEqual(currentDepsState, prevDepsState)
       ));
 
       if (isPreparerNeedToBeRun) {
         preparerConfig.prevDepsState = currentDepsState;
-        context.usedPreparers[id] = true;
         preparer(context.dispatch, context.getState, props);
       }
     });

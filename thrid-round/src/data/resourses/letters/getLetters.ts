@@ -1,4 +1,5 @@
-import axios from 'axios';
+import { Controller } from '@utils/abortController';
+import { request } from '@utils/request';
 
 import { BACKEND_BASE_URL } from '@constants';
 
@@ -13,20 +14,10 @@ export type GetLettersResponse = {
   users: UsersEntity;
 };
 
-const CancelToken = axios.CancelToken;
-
-const makeInstance = (function (folder: string) {
-  if (this.source && this.folder === folder) {
-    this.source.cancel();
-  }
-
-  this.folder = folder;
-  this.source = CancelToken.source();
-  return this.source;
-}).bind({});
+const controller = new Controller();
 
 export const getLetters = async (folder: string, filters: FiltersState, from?: number, to?: number): Promise<GetLettersResponse> => {
-  const instance = makeInstance(folder);
+  const signal = controller.instance(folder);
 
   const filtersParams = {
     sortType: filters.sortType,
@@ -35,13 +26,15 @@ export const getLetters = async (folder: string, filters: FiltersState, from?: n
     readFilter: filters.readFilter ? 1 : 0,
   };
 
-  return axios.get(API_URL, {
-    cancelToken: instance.token,
-    params: {
-      folder,
-      from,
-      to,
-      ...filtersParams,
-    },
-  }).then(({ data }) => data);
+  const params = {
+    folder,
+    from,
+    to,
+    ...filtersParams,
+  };
+
+  return request(API_URL, {
+    signal,
+    params,
+  });
 };

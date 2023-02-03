@@ -8,6 +8,6 @@ const uniqueId = () => idCounter++;
 export const createPreparer = <P>(func: PreparerFunc<P>, params: PreparerParams): Preparer<P> => ({
   id: uniqueId(),
   preparer: func,
-  prevDepsState: null,
+  prevDepsState: undefined,
   ...params,
 });

@@ -7,8 +7,6 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 
-const imageInlineLoader = path.resolve(__dirname, './loaders/image-inline-loader.js');
-
 const isProduction = process.env.MODE === 'production';
 const tsConfigPath = path.resolve(__dirname, '../tsconfig.json');
 const withBundleAnalyzer = Boolean(process.env.BUNDLE_ANALYZE);
@@ -42,8 +40,8 @@ module.exports = merge(common, {
       inject: true,
       mode: isProduction ? 'webapp' : 'light',
       favicons: {
-        appName: 'Jeembo Finance',
-        appDescription: 'Crypto arbitrage platform',
+        appName: 'Mail.ru - Почта',
+        appDescription: 'Почта, письма, рассылки',
         background: '#fff',
         theme_color: '#5095f0',
         icons: {

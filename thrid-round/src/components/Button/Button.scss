@@ -80,6 +80,12 @@
   }
 }
 
+@include useDarkScheme {
+  .secondary.disabled {
+    filter: saturate(20%);
+  }
+}
+
 .contrast {
   &.selected,
   &:hover {

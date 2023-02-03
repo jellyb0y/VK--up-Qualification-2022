@@ -1,4 +1,5 @@
-import axios from 'axios';
+import { Controller } from '@utils/abortController';
+import { Method, request } from '@utils/request';
 
 import { BACKEND_BASE_URL } from '@constants';
 
@@ -12,22 +13,14 @@ export interface SendLetterParams {
   data: WysiwygData;
 };
 
-const CancelToken = axios.CancelToken;
-
-const makeInstance = (function () {
-  if (this.source) {
-    this.source.cancel();
-  }
-
-  this.source = CancelToken.source();
-  return this.source;
-}).bind({});
+const controller = new Controller();
 
 export const sendLetter = async (data: SendLetterParams): Promise<void> => {
-  const instance = makeInstance();
+  const signal = controller.instance();
 
-  return axios.post(API_URL, {
-    cancelToken: instance.token,
-    data,
+  return request(API_URL, {
+    method: Method.POST,
+    signal,
+    body: data,
   });
 };

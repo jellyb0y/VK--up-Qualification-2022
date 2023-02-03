@@ -37,7 +37,6 @@ export type PreparerParams = {
 };
 
 export type Context = {
-  usedPreparers: Record<string, boolean>;
   dispatch: Dispatch;
   getState: () => State;
 };

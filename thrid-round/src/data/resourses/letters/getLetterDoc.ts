@@ -1,8 +1,9 @@
-import axios from 'axios';
+import { Controller } from '@utils/abortController';
+import { request } from '@utils/request';
 
 import { BACKEND_BASE_URL } from '@constants';
 
-import type { Letter, UsersEntity } from '@database/types';
+import type { Letter } from '@database/types';
 
 const API_URL = `${BACKEND_BASE_URL}/getLetterDoc`;
 
@@ -10,24 +11,15 @@ export type GetLetterDocResponse = {
   doc: Letter['doc'];
 };
 
-const CancelToken = axios.CancelToken;
-
-const makeInstance = (function () {
-  if (this.source) {
-    this.source.cancel();
-  }
-
-  this.source = CancelToken.source();
-  return this.source;
-}).bind({});
+const controller = new Controller();
 
 export const getLetterDoc = async (id: string): Promise<GetLetterDocResponse> => {
-  const instance = makeInstance();
+  const signal = controller.instance();
 
-  return axios.get(API_URL, {
-    cancelToken: instance.token,
+  return request(API_URL, {
+    signal,
     params: {
       id,
     },
-  }).then(({ data }) => data);
+  });
 };

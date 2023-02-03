@@ -4,7 +4,7 @@ import { Side } from '@lib/DataPreparer/types';
 
 import { getLettersResolver } from '@data/resolvers/letters/getLettersResolver';
 
-export const prepareLettersClient = createPreparer(async (dispatch, getState) => {
+export const prepareLettersClient = createPreparer((dispatch, getState) => {
   const { folders: { selectedFolder } } = getState();
   dispatch(getLettersResolver(selectedFolder));
 }, {

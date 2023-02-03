@@ -19,7 +19,9 @@ import {
 import type { Schemes } from '@lib/Themes/types';
 import type { Languages } from '@lib/Languages/types';
 
-const stylesLookup = discoverProjectStyles(ROOT_PATH);
+const CSS_ASSETS = ['main.css'];
+
+const stylesLookup = discoverProjectStyles(ROOT_PATH, (filename: string) => CSS_ASSETS.includes(filename));
 
 export const renderer = async (url: string, scheme: Schemes, lang: Languages): Promise<string> => {
   try {

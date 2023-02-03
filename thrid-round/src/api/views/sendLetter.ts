@@ -6,7 +6,7 @@ export const sendLetter: Entrypoint = (req, res) => {
   const { body } = req;
   const parsedBody = JSON.parse(body);
 
-  const data = parsedBody.data as SendLetterParams;
+  const data = parsedBody as SendLetterParams;
 
   if (!data) {
     res.statusCode = 400;

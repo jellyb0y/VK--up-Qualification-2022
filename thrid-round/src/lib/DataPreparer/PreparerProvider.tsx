@@ -5,7 +5,6 @@ import type { PreparerProviderProps } from './types';
 
 export const PreparerProvider: FC<PreparerProviderProps> = ({ store, children }) => {
   const context = {
-    usedPreparers: {},
     dispatch: store.dispatch,
     getState: store.getState,
   };
